@@ -8,12 +8,31 @@ Transaction::Transaction(const std::vector<Item>& items) {
     }
 }
 
-TransactionMap Transaction::getTransactionMap() {
-    TransactionMap tsMap{std::cref(_userMap)};
+const TransactionMap Transaction::getTransactionMap() {
+    TransactionMap tsMap{_userMap};
 
     tsMap.insert({"unused", _itemMap});
 
     return tsMap;
+}
+
+std::ostream& operator<<(std::ostream& os, const Transaction& t) {
+    TransactionMap tsMap{t._userMap};
+    tsMap.insert({"unused", t._itemMap});
+
+    for (auto userIt : tsMap) {
+        os << "-------------------------" << std::endl;
+        os << "User: " << userIt.first << std::endl;
+        os << "Items: ";
+        int a = 1; 
+        for (auto& itemIt : userIt.second) {
+            auto& [amount, price] = itemIt.second;
+            os << std::to_string(a++) + ". " << "name: " << itemIt.first << " amount: " << amount << " price: " << price << std::endl;
+        }
+        os << "-------------------------" << std::endl;
+    }
+
+    return os;
 }
 
 template <UpdateType T>
@@ -83,8 +102,6 @@ bool Transaction::isInUserMap(const Item& item, std::string userId) {
 
 template <UpdateType T>
 bool Transaction::updateItemMap(const Item& item) {
-    bool isValidItem = isInItemMap(item);
-
     if (!isInItemMap<T>(item)) {
         if (T == UpdateType::ADD) {
             _itemMap.insert({item._name, {item._amount, item._price}});

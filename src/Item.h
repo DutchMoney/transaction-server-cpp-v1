@@ -1,5 +1,6 @@
+#ifndef ITEM_H
+#define ITEM_H
 #include <string>
-
 
 struct Item {
     Item(const std::string& name, int amount, float price ); 
@@ -8,3 +9,5 @@ struct Item {
     const int _amount;
     const float _price;
 };
+
+#endif

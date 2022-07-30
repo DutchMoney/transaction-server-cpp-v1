@@ -1,6 +1,7 @@
 #include <vector>
 #include "Item.h"
 #include <unordered_map>
+#include <iostream>
 #include <string>
 
 typedef std::unordered_map<std::string, std::tuple<int, float>> ItemMap;
@@ -19,10 +20,12 @@ public:
     template <UpdateType T>
     bool updateUserItem(std::string userId, const Item& item);
 
-    TransactionMap getTransactionMap();
+    const TransactionMap getTransactionMap();
+
+    friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
 
-private:
+// private:
     
     template <UpdateType T>
     bool isInItemMap(const Item& item);

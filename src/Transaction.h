@@ -1,3 +1,5 @@
+#ifndef TRANSACTION_H
+#define TRANSACTION_H
 #include <vector>
 #include "Item.h"
 #include <unordered_map>
@@ -25,7 +27,7 @@ public:
     friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
 
-// private:
+private:
     
     template <UpdateType T>
     bool isInItemMap(const Item& item);
@@ -39,3 +41,5 @@ public:
     ItemMap _itemMap;
     TransactionMap _userMap;
 };
+
+#endif

@@ -8,56 +8,30 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jul 30 16:10:17 2022
+# Make data base, printed on Mon Aug 01 02:02:09 2022
 
 # Variables
 
 # environment
-LIB_BASE = call "C:\Users\prema\vendor\lib\lib_base.cmd"
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
-CONEMUARGS2 = 
-# environment
 LC_ALL = C
-# environment
-CONEMUPID = 5356
-# environment
-CONEMUWORKDIR = C:\Users\prema
-# environment
-CONEMUCFGDIR = C:\Users\prema\vendor\conemu-maximus5
-# environment
-CONEMUHWND = 0x0007073E
 # environment
 USERPROFILE = C:\Users\prema
 # environment
-VENDORED_MINOR = 24
-# environment
-ARCHITECTURE = 64
-# environment
 LOCALAPPDATA = C:\Users\prema\AppData\Local
 # environment
-CONEMUSERVERPID = 19596
-# environment
-VSCODE_CWD = C:\Users\prema\projects\dutch-money\transaction-server-cpp-v1
-# environment
-GIT_LOCALE = "C:\Program Files\Git\usr\bin\locale.exe"
+VSCODE_CWD = C:\Users\prema\AppData\Local\Programs\Microsoft VS Code
 # environment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
 # environment
-USER_ALIASES = C:\Users\prema\config\user_aliases.cmd
-# environment
-FAST_INIT = 0
-# environment
-CONEMUWORKDRIVE = C:
-# environment
 PROCESSOR_LEVEL = 6
 # environment
 PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
-# environment
-CMDER_ROOT = C:\Users\prema
 # default
 MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # environment
@@ -65,27 +39,19 @@ GOPATH = C:\Users\prema\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CONEMUTASK = {cmd::Cmder}
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_17788_LPMIQNKNEXADWUYK
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10820_SGHSGTOHZOHACVDT
-# environment
-CMDER_USER_FLAGS = $(subst ,, )
-# environment
-CEXEC = C:\Users\prema\vendor\bin\cexec.cmd
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # automatic
 %D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
-# environment
-USER_BUILD = windows.2
 # automatic
 ^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
 # automatic
 %F = $(notdir $%)
-# environment
-GIT_INSTALL_ROOT = C:\Users\prema\vendor\git-for-windows
 # environment
 VSCODE_CODE_CACHE_PATH = C:\Users\prema\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
@@ -103,70 +69,35 @@ PROCESSOR_ARCHITEW6432 = AMD64
 # makefile
 MAKEFLAGS = pqrR
 # environment
-CMDER_SHELL = cmd
-# environment
-CMDER_INIT_START = 15:05:25.00
-# environment
 ONEDRIVE = C:\Users\prema\OneDrive
-# environment
-VENDORED_PATCH = 1
-# environment
-POSITION = append
-# environment
-GIT_VERSION_USER = 2.24.1.windows.2
 # makefile
 CURDIR := c:/Users/prema/projects/dutch-money/transaction-server-cpp-v1
 # environment
-CMDER_CONFIGURED = 1
-# environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # automatic
 *D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
 # environment
 PROGRAMFILES = C:\Program Files (x86)
 # environment
-PATH_POSITION = append
-# environment
 MFLAGS = -pqrR
 # default
 .SHELLFLAGS := -c
 # environment
-ANSICON_DEF = 7
-# environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
-# environment
- 
-TIME_INIT = 0
-# environment
-ADD_PATH = C:\Users\prema
 # automatic
 +D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST := Makefile
-# environment
-ALIASES = C:\Users\prema\config\user_aliases.cmd
 # automatic
 @F = $(notdir $@)
 # environment
-GIT_EXECUTABLE = C:\Program Files\Git\cmd\git.exe
-# environment
-MAX_DEPTH = 1
-# environment
-VSCODE_PID = 10820
-# environment
-CONEMUPALETTE = Monokai
+VSCODE_PID = 17788
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
-# environment
-CMDER_ALIASES = 1
 # automatic
 *F = $(notdir $*)
 # automatic
 <D = $(patsubst %/,%,$(patsubst %\,%,$(dir $<)))
-# environment
-CONEMUDIR = C:\Users\prema\vendor\conemu-maximus5
-# environment
-CONEMUDRAWHWND = 0x00020860
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
@@ -188,15 +119,13 @@ COMSPEC = C:\WINDOWS\system32\cmd.exe
 # environment
 WINDIR = C:\WINDOWS
 # environment
-CONEMUBUILD = 191012
-# environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
 MOSQUITTO_DIR = C:\Program Files (x86)\mosquitto
 # environment
-PATH = C:\Users\prema\vendor\conemu-maximus5\ConEmu\Scripts;C:\Users\prema\vendor\conemu-maximus5;C:\Users\prema\vendor\conemu-maximus5\ConEmu;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Git\cmd;C:\Program Files\MongoDB\Server\4.2\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Users\prema\Python\Python39;C:\Program Files\PuTTY\;C:\ProgramData\chocolatey\bin;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Go\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Python\Python39\Scripts\;C:\Python\Python39\;C:\Users\prema\.cargo\bin;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\prema\AppData\Local\Microsoft\WindowsApps;C:\Users\prema\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\prema\AppData\Local\Yarn\bin;C:\Users\prema\AppData\Local\GitHubDesktop\bin;C:\cygwin64\bin;C:\Users\prema\AppData\Roaming\Composer\vendor\bin;C:\Users\prema\AppData\Roaming\npm;C:\Users\prema\go\bin;C:\Program Files\heroku\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\prema\vendor\bin;C:\Users\prema\bin;C:\Users\prema;C:\Users\prema\vendor\git-for-windows\cmd;C:\Users\prema\vendor\git-for-windows\mingw64\bin;C:\Users\prema\vendor\git-for-windows\usr\bin;C:\Users\prema\vendor\bin;C:\Users\prema
+PATH = C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Git\cmd;C:\Program Files\MongoDB\Server\4.2\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Users\prema\Python\Python39;C:\Program Files\PuTTY\;C:\ProgramData\chocolatey\bin;;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Go\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Python\Python39\Scripts\;C:\Python\Python39\;C:\Users\prema\.cargo\bin;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\prema\AppData\Local\Microsoft\WindowsApps;C:\Users\prema\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\prema\AppData\Local\Yarn\bin;C:\Users\prema\AppData\Local\GitHubDesktop\bin;C:\cygwin64\bin;C:\Users\prema\AppData\Roaming\Composer\vendor\bin;C:\Users\prema\AppData\Roaming\npm;C:\Users\prema\go\bin;C:\Program Files\heroku\bin
 # environment
 COMPUTERNAME = LAPTOP-J7SN3NLT
 # default
@@ -204,49 +133,21 @@ MAKEFILES :=
 # automatic
 ^F = $(notdir $^)
 # environment
-PROMPT = CLINK $P$G
+PROMPT = $P$G
 # environment
 CHOCOLATEYLASTPATHUPDATE = 132618427759544729
-# environment
-CONEMUANSILOG = 
-# environment
-CMDER_INIT_END = 15:05:27.48
-# environment
-VENDORED_MAJOR = 2
-# environment
-CONEMUBASEDIRSHORT = C:\Users\prema\vendor\conemu-maximus5\ConEmu
 # environment
 LOGONSERVER = \\LAPTOP-J7SN3NLT
 # environment
 USERNAME = prema
 # environment
-VERBOSE_OUTPUT = 0
-# environment
-CONEMUHOOKS = Enabled
-# environment
 COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
-# environment
-CCALL = call C:\Users\prema\vendor\bin\cexec.cmd
-# environment
-FIND_QUERY = C:\\Users\\prema
 # automatic
 ?F = $(notdir $?)
 # environment
-CMDER_CLINK = 1
-# environment
 PROGRAMW6432 = C:\Program Files
 # environment
-LIB_CONSOLE = call "C:\Users\prema\vendor\lib\lib_console.cmd"
-# environment
-FOUND = 0
-# environment
-USER_MAJOR = 2
-# environment
-ANSICON = 211x32766 (211x47)
-# environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
-# environment
-LIB_PATH = call "C:\Users\prema\vendor\lib\lib_path.cmd"
 # automatic
 +F = $(notdir $+)
 # environment
@@ -258,29 +159,19 @@ GNUMAKEFLAGS :=
 # environment
 OS = Windows_NT
 # environment
-CONEMUARGS = /Icon "C:\Users\prema\icons\cmder.ico" /Title Cmder
+__COMPAT_LAYER = DetectorsAppHealth
 # makefile
 .DEFAULT_GOAL := transaction_test
-# environment
-LIB_GIT = call "C:\Users\prema\vendor\lib\lib_git.cmd"
 # default
 MAKE_VERSION := 4.3
 # environment
-CONEMUCONFIG = 
-# environment
-CONEMUANSI = ON
-# environment
 PROGRAMFILES(X86) = C:\Program Files (x86)
-# environment
-USER_PATCH = 1
 # environment
 USERDOMAIN_ROAMINGPROFILE = LAPTOP-J7SN3NLT
 # environment
 NUMBER_OF_PROCESSORS = 12
 # environment
 PUBLIC = C:\Users\Public
-# environment
-CONEMUBASEDIR = C:\Users\prema\vendor\conemu-maximus5\ConEmu
 # environment
 APPDATA = C:\Users\prema\AppData\Roaming
 # environment
@@ -290,66 +181,31 @@ PROCESSOR_ARCHITECTURE = x86
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = C:\Users\prema
-# environment
 COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\prema\AppData\Local\Temp
 # environment
-TERM = cygwin
-# environment
 VSCODE_IPC_HOOK = \\.\pipe\cddb7ec924c36366c4d4f95d93778c61-1.69.2-main-sock
-# environment
-GIT_VERSION_VENDORED = 2.24.1.windows.2
-# environment
-CONEMUBACKHWND = 0x000207D4
 # default
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
-# environment
-PLINK_PROTOCOL = ssh
-# environment
-USER_MINOR = 24
-# environment
-FEFLAGNAME = $(subst ,, )
-# environment
-LIB_PROFILE = call "C:\Users\prema\vendor\lib\lib_profile.cmd"
 # default
 SUFFIXES := 
 # environment
 ALLUSERSPROFILE = C:\ProgramData
 # environment
 SESSIONNAME = Console
-# environment
-VSCODE_CLI = 1
-# environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
-# environment
-ARCHITECTURE_BITS = 64
-# environment
-NIX_TOOLS = 1
 # default
-.FEATURES := target-spec 
-ific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
 PROCESSOR_REVISION = 9e0a
 # environment
-VENDORED_BUILD = windows.2
-# environment
-DEBUG_OUTPUT = 0
-# environment
-SVN_SSH = C:\\Program Files\\Git\\bin\\ssh.exe
-# environment
-DEPTH = 1
-# environment
-CONEMUDRIVE = C:
-# environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 # variable set hash-table stats:
-# Load=167/1024=16%, Rehash=0, Collisions=25/193=13%
+# Load=96/1024=9%, Rehash=0, Collisions=11/122=9%
 
 # Pattern-specific Variable Values
 
@@ -357,9 +213,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/prema/projects/dutch-money/transaction-server-cpp-v1, mtime 1659168328): 11 files, no impossibilities.
+# . (key c:/Users/prema/projects/dutch-money/transaction-server-cpp-v1, mtime 1659290525): 12 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -367,32 +223,12 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 
 # Files
 
-item.o: src/Item.h src/Item.cpp
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 9):
-	g++ -std=c++17 -c src/Item.cpp
-
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-30 16:01:32
+#  Last modified 2022-08-01 02:01:59
 #  File has been updated.
 #  Successfully updated.
-
-# Not a target:
-src/main.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-transaction.o: src/Transaction.h src/Transaction.cpp
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 12):
-	g++ -std=c++17 -c src/Transaction.cpp
 
 # Not a target:
 .DEFAULT:
@@ -407,58 +243,35 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
-main.o: src/main.cpp
+link:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 6):
-	g++ -std=c++17 -c src/main.cpp
+	g++ -std=c++17 -c src/main.cpp sr 
+c/Transaction.cpp src/Item.cpp
 
-transaction_test: item.o transaction.o main.o
+transaction_test: link
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 3):
-	g++ -std=c++17 -o transaction_test item.o transaction.o main.o
-
-# Not a target:
-src/Transaction.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-src/Item.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-src/Transaction.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-src/Item.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+	g++ -std=c++17 -o transaction_test Item.o Transaction.o main.o
 
 # files hash-table stats:
-# Load=13/1024=1%, Rehash=0, Collisions=1/34=3%
+# Load=6/1024=1%, Rehash=0, Collisions=0/18=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 22 / storage = 226 B / avg = 10 B
-# current buf: size = 8174 B / used = 226 B / count = 22 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 17 / storage = 146 B / avg = 8 B
+# current buf: size = 8174 B / used = 146 B / count = 17 / avg = 8 B
 
-# strcache performance: lookups = 34 / hit rate = 35%
+# strcache performance: lookups = 24 / hit rate = 29%
 # hash-table stats:
-# Load=22/8192=0%, Rehash=0, Collisions=0/34=0%
-# Finished Make data base on Sat Jul 30 16:10:17 2022
+# Load=17/8192=0%, Rehash=0, Collisions=0/24=0%
+# Finished Make data base on Mon Aug 01 02:02:09 2022
 
  

@@ -1,13 +1,15 @@
 
-transaction_test: item.o transaction.o main.o
-	g++ -std=c++17 -o transaction_test item.o transaction.o main.o
+transaction_test: link
+	g++ -std=c++17 -fpic -o transaction_test main.o Transaction.o Item.o
 
-main.o: src/main.cpp
-	g++ -std=c++17 -c src/main.cpp
+link:
+	g++ -std=c++17 -c src/main.cpp src/Transaction.cpp src/Item.cpp
+# main.o: src/main.cpp
+# 	g++ -std=c++17 -c src/main.cpp
 
-item.o: src/Item.h src/Item.cpp
-	g++ -std=c++17 -c src/Item.cpp
+# Item.o: src/Item.h src/Item.cpp
+# 	g++ -std=c++17 -c src/Item.cpp
 
-transaction.o: src/Transaction.h src/Transaction.cpp
-	g++ -std=c++17 -c src/Transaction.cpp
+# Transaction.o: src/Transaction.h src/Transaction.cpp
+# 	g++ -std=c++17 -c src/Transaction.cpp
 

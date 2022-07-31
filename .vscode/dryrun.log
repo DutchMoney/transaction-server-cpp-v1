@@ -1,8 +1,7 @@
-make.exe --dry-run --always-make --keep-going --print-directory
+make.exe --dry-run --keep-going --print-directory
 make: Entering directory 'c:/Users/prema/projects/dutch-money/transaction-server-cpp-v1'
-g++ -std=c++17 -c src/Item.cpp
-g++ -std=c++17 -c src/Transaction.cpp
-g++ -std=c++17 -c src/main.cpp
-g++ -std=c++17 -o transaction_test item.o transaction.o main.o
+g++ -std=c++17 -c src/main.cpp src/Transaction.cpp src/Item.cpp
+g++ -std=c++17 -o transaction_test Item.o Transaction.o main.o
+ 
 make: Leaving directory 'c:/Users/prema/projects/dutch-money/transaction-server-cpp-v1'
  

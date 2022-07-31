@@ -35,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
     return os;
 }
 
-template <UpdateType T>
+template <Transaction::UpdateType T>
 bool Transaction::updateUserItem(std::string userId, const Item& item) {
     if (!isInItemMap<T == ADD ? REMOVE : ADD>(item)) return false;
 
@@ -43,7 +43,7 @@ bool Transaction::updateUserItem(std::string userId, const Item& item) {
 
     auto userIt = _userMap.find(userId);
     if (userIt == _userMap.end()) {
-        if (T == UpdateType::REMOVE) return false;
+        if (T == Transaction::UpdateType::REMOVE) return false;
 
         _userMap.insert({userId, {}});
 
@@ -52,7 +52,7 @@ bool Transaction::updateUserItem(std::string userId, const Item& item) {
 
     auto itemIt = userIt->second.find(item._name);
     if (itemIt == userIt->second.end()) {
-        if (T == UpdateType::REMOVE) return false;
+        if (T == Transaction::UpdateType::REMOVE) return false;
         
         userIt->second.insert({item._name, {item._amount, item._price}});
 
@@ -60,7 +60,7 @@ bool Transaction::updateUserItem(std::string userId, const Item& item) {
     }
 
     auto& [amount, price] = itemIt->second;
-    const int newAmount = T == UpdateType::ADD ? amount + item._amount : amount - item._amount;
+    const int newAmount = T == Transaction::UpdateType::ADD ? amount + item._amount : amount - item._amount;
 
     if (newAmount == 0) userIt->second.erase(item._name);
     else if (newAmount < 0) return false;
@@ -69,13 +69,13 @@ bool Transaction::updateUserItem(std::string userId, const Item& item) {
     return true;
 }
 
-template <UpdateType T>
+template <Transaction::UpdateType T>
 bool Transaction::isInItemMap(const Item& item) {
     auto it = _itemMap.find(item._name);
 
     if (it == _itemMap.end()) return false;
 
-    if (T == UpdateType::ADD) return true;
+    if (T == Transaction::UpdateType::ADD) return true;
 
     auto [amount, price] = it->second;
 
@@ -84,7 +84,7 @@ bool Transaction::isInItemMap(const Item& item) {
     return true;
 }
 
-template <UpdateType T>
+template <Transaction::UpdateType T>
 bool Transaction::isInUserMap(const Item& item, std::string userId) {
     auto userIt = _userMap.find(userId);
     if (userIt == _userMap.end()) return false;
@@ -92,7 +92,7 @@ bool Transaction::isInUserMap(const Item& item, std::string userId) {
     auto itemIt = userIt->second.find(item._name);
     if (itemIt == userIt->second.end()) return false;
 
-    if (T == UpdateType::ADD) return true;
+    if (T == Transaction::UpdateType::ADD) return true;
 
     auto [amount, price] = itemIt->second;
     if (item._amount > amount || item._price != price) return false;
@@ -100,10 +100,10 @@ bool Transaction::isInUserMap(const Item& item, std::string userId) {
     return true;
 }
 
-template <UpdateType T>
+template <Transaction::UpdateType T>
 bool Transaction::updateItemMap(const Item& item) {
     if (!isInItemMap<T>(item)) {
-        if (T == UpdateType::ADD) {
+        if (T == Transaction::UpdateType::ADD) {
             _itemMap.insert({item._name, {item._amount, item._price}});
 
             return true;
@@ -114,7 +114,7 @@ bool Transaction::updateItemMap(const Item& item) {
 
     auto& [amount, price] = _itemMap.find(item._name)->second;
     
-    const int newAmount = T == UpdateType::ADD ? amount + item._amount : amount - item._amount;
+    const int newAmount = T == Transaction::UpdateType::ADD ? amount + item._amount : amount - item._amount;
 
     if (newAmount == 0) _itemMap.erase(item._name);
     else if (newAmount < 0) return false;

@@ -9,15 +9,16 @@
 typedef std::unordered_map<std::string, std::tuple<int, float>> ItemMap;
 typedef std::unordered_map<std::string, ItemMap> TransactionMap;
 
-enum UpdateType {
-    ADD,
-    REMOVE
-};
 
 class Transaction {
 
 public:
     Transaction(const std::vector<Item>& items);
+
+    enum UpdateType {
+        ADD,
+        REMOVE
+    };
 
     template <UpdateType T>
     bool updateUserItem(std::string userId, const Item& item);

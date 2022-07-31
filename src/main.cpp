@@ -9,7 +9,7 @@ int main() {
 
     std::cout << t << std::endl;
 
-    t.updateUserItem<UpdateType::ADD>("preman", {"apple", 2, 5});
+    t.updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
 
     std::cout << t << std::endl;
 

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Aug 01 02:02:09 2022
+# Make data base, printed on Mon Aug 01 02:09:01 2022
 
 # Variables
 
@@ -146,7 +146,8 @@ COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 ?F = $(notdir $?)
 # environment
 PROGRAMW6432 = C:\Program Files
-# environment
+#  
+environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # automatic
 +F = $(notdir $+)
@@ -213,9 +214,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/prema/projects/dutch-money/transaction-server-cpp-v1, mtime 1659290525): 12 files, no impossibilities.
+# . (key c:/Users/prema/projects/dutch-money/transaction-server-cpp-v1, mtime 1659290824): 11 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -226,7 +227,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-01 02:01:59
+#  Last modified 2022-08-01 02:06:58
 #  File has been updated.
 #  Successfully updated.
 
@@ -248,15 +249,14 @@ link:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 6):
-	g++ -std=c++17 -c src/main.cpp sr 
-c/Transaction.cpp src/Item.cpp
+	g++ -std=c++17 -c src/main.cpp src/Transaction.cpp src/Item.cpp
 
 transaction_test: link
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 3):
-	g++ -std=c++17 -o transaction_test Item.o Transaction.o main.o
+	g++ -std=c++17 -fpic -o transaction_test main.o Transaction.o Item.o
 
 # files hash-table stats:
 # Load=6/1024=1%, Rehash=0, Collisions=0/18=0%
@@ -266,12 +266,12 @@ transaction_test: link
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 17 / storage = 146 B / avg = 8 B
-# current buf: size = 8174 B / used = 146 B / count = 17 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 16 / storage = 125 B / avg = 7 B
+# current buf: size = 8174 B / used = 125 B / count = 16 / avg = 7 B
 
-# strcache performance: lookups = 24 / hit rate = 29%
+# strcache performance: lookups = 23 / hit rate = 30%
 # hash-table stats:
-# Load=17/8192=0%, Rehash=0, Collisions=0/24=0%
-# Finished Make data base on Mon Aug 01 02:02:09 2022
+# Load=16/8192=0%, Rehash=0, Collisions=0/23=0%
+# Finished Make data base on Mon Aug 01 02:09:01 2022
 
  

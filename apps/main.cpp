@@ -9,7 +9,8 @@ int main() {
 
     t.addUserIfNotExists("preman");
     bool sts  = t.updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
-    sts  = t.updateUserItem<Transaction::UpdateType::ADD>("preman", {"banana", 12, 5});
+    sts  = t.updateUserItem<Transaction::UpdateType::ADD>("preman", {"banana", 12, 1});
+    sts  = t.updateUserItem<Transaction::UpdateType::ADD>("preman", {"banana", 10, 1});
 
     std::cout << t << std::endl;
 

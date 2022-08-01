@@ -1,5 +1,6 @@
 #include "Transaction.h"
 #include <functional>
+#include <iomanip>
 
 Transaction::Transaction(const std::vector<Item>& items) {
 
@@ -57,17 +58,30 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
     transaction_map tsMap{t._userMap};
     tsMap.insert({"unused", t._itemMap});
 
+    os << "###################################" << std::endl;
+    os << "| Transaction ID: " << 1 << std::endl;
+
     for (auto userIt : tsMap) {
-        os << "-------------------------" << std::endl;
-        os << "User: " << userIt.first << std::endl;
-        os << "Items: ";
+        os << "|------------------------------" << std::endl;
+        os << "| User: " << userIt.first << std::endl;
+        os << std::left << std::setw(8) << std::setfill(' ') << "| Number";
+        os << std::left << std::setw(8) << std::setfill(' ') << "| Name";
+        os << std::left << std::setw(8) << std::setfill(' ') << "| Amount";
+        os << std::left << std::setw(8) << std::setfill(' ') << "| Price" << std::endl;
+
         int a = 1; 
         for (auto& itemIt : userIt.second) {
+            os << "|_______|_______|_______|_________" << std::endl;
             auto& [amount, price] = itemIt.second;
-            os << std::to_string(a++) + ". " << "name: " << itemIt.first << " amount: " << amount << " price: " << price << std::endl;
+            os << std::left << std::setw(8) << std::setfill(' ') << "| "+std::to_string(a++);
+            os << std::left << std::setw(8) << std::setfill(' ') << "| "+itemIt.first;
+            os << std::left << std::setw(8) << std::setfill(' ') << "| "+std::to_string(amount);
+            os << std::left << std::setw(8) << std::setfill(' ') << "| "+std::to_string(price) << std::endl;
         }
-        os << "-------------------------" << std::endl;
+        os << "|------------------------------" << std::endl;
     }
+
+    os << "###################################" << std::endl;
 
     return os;
 }

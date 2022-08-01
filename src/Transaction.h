@@ -59,8 +59,6 @@ public:
         return true;
     }
 
-private:
-    
     template <UpdateType T>
     bool isItemUnused(const Item& item) {
 
@@ -93,6 +91,8 @@ private:
 
         return true;
     }
+
+private:
 
     template <UpdateType T>
     bool updateItemMap(const Item& item) {

@@ -9,7 +9,7 @@ Transaction::Transaction(const std::vector<Item>& items) {
     }
 }
 
-bool Transaction::isUserInTransaction(std::string userId) {
+bool Transaction::isUserInTransaction(std::string userId) const {
     auto userIt = _userMap.find(userId);
 
     if (userIt == _userMap.end()) return false;
@@ -46,7 +46,7 @@ bool Transaction::removeUser(std::string userId) {
     return true;
 }
 
-const transaction_map Transaction::getTransactionMap() {
+const transaction_map Transaction::getTransactionMap() const {
     transaction_map tsMap{_userMap};
 
     tsMap.insert({"unused", _itemMap});
@@ -55,8 +55,7 @@ const transaction_map Transaction::getTransactionMap() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Transaction& t) {
-    transaction_map tsMap{t._userMap};
-    tsMap.insert({"unused", t._itemMap});
+    auto& tsMap = t.getTransactionMap();
 
     os << "###################################" << std::endl;
     os << "| Transaction ID: " << 1 << std::endl;

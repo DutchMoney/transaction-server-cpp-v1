@@ -20,13 +20,13 @@ public:
         REMOVE
     };
 
-    bool isUserInTransaction(std::string userId);
+    bool isUserInTransaction(std::string userId) const;
 
     transaction_map::iterator addUserIfNotExists(std::string userId);
 
     bool removeUser(std::string userId);
 
-    const transaction_map getTransactionMap();
+    const transaction_map getTransactionMap() const;
 
     friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
@@ -59,8 +59,11 @@ public:
         return true;
     }
 
+
+private:
+
     template <UpdateType T>
-    bool isItemUnused(const Item& item) {
+    bool isItemUnused(const Item& item) const {
 
         auto it = _itemMap.find(item._name);
 
@@ -76,7 +79,7 @@ public:
     }
 
     template <UpdateType T>
-    bool isUserHasItem(const Item& item, std::string userId) {
+    bool isUserHasItem(const Item& item, std::string userId) const {
 
         auto userIt = _userMap.find(userId);
         if (userIt == _userMap.end()) return false;
@@ -91,8 +94,6 @@ public:
 
         return true;
     }
-
-private:
 
     template <UpdateType T>
     bool updateItemMap(const Item& item) {

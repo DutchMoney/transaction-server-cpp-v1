@@ -5,12 +5,14 @@
 int main() {
     Transaction t {std::vector<Item> {Item {"apple", 5, 5}}}; 
 
-    std::cout << "asdasada" << std::endl;
+    std::cout << t << std::endl;
+
+    t.addUserIfNotExists("preman");
+    bool sts  = t.updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
 
     std::cout << t << std::endl;
 
-    t.updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
-
+    sts = t.removeUser("preman");
     std::cout << t << std::endl;
 
     return 0;

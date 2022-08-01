@@ -8,8 +8,45 @@ Transaction::Transaction(const std::vector<Item>& items) {
     }
 }
 
-const TransactionMap Transaction::getTransactionMap() {
-    TransactionMap tsMap{_userMap};
+bool Transaction::isUserInTransaction(std::string userId) {
+    auto userIt = _userMap.find(userId);
+
+    if (userIt == _userMap.end()) return false;
+
+    return true;
+}
+
+transaction_map::iterator Transaction::addUserIfNotExists(std::string userId) {
+    auto userIt = _userMap.find(userId);
+
+    if (userIt != _userMap.end()) return userIt;
+
+    _userMap.insert({userId, {}});
+
+    userIt = _userMap.find(userId);
+
+    return userIt;
+}
+
+bool Transaction::removeUser(std::string userId) {
+    if (!isUserInTransaction(std::ref(userId))) return false; 
+
+    auto it = _userMap.find(userId);
+
+    for (auto& itemPair : it->second) {
+        const auto& [name, itemDescPair] = itemPair;
+        const auto& [amount, price] = itemDescPair;
+
+        updateItemMap<ADD>({name, amount, price});
+    }
+
+    _userMap.erase(userId);
+
+    return true;
+}
+
+const transaction_map Transaction::getTransactionMap() {
+    transaction_map tsMap{_userMap};
 
     tsMap.insert({"unused", _itemMap});
 
@@ -17,7 +54,7 @@ const TransactionMap Transaction::getTransactionMap() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Transaction& t) {
-    TransactionMap tsMap{t._userMap};
+    transaction_map tsMap{t._userMap};
     tsMap.insert({"unused", t._itemMap});
 
     for (auto userIt : tsMap) {
@@ -33,92 +70,4 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
     }
 
     return os;
-}
-
-template <Transaction::UpdateType T>
-bool Transaction::updateUserItem(std::string userId, const Item& item) {
-    if (!isInItemMap<T == ADD ? REMOVE : ADD>(item)) return false;
-
-    if (!updateItemMap<T == ADD ? REMOVE : ADD>({item._name, item._amount, item._price})) return false;
-
-    auto userIt = _userMap.find(userId);
-    if (userIt == _userMap.end()) {
-        if (T == Transaction::UpdateType::REMOVE) return false;
-
-        _userMap.insert({userId, {}});
-
-        return true;
-    }
-
-    auto itemIt = userIt->second.find(item._name);
-    if (itemIt == userIt->second.end()) {
-        if (T == Transaction::UpdateType::REMOVE) return false;
-        
-        userIt->second.insert({item._name, {item._amount, item._price}});
-
-        return true;
-    }
-
-    auto& [amount, price] = itemIt->second;
-    const int newAmount = T == Transaction::UpdateType::ADD ? amount + item._amount : amount - item._amount;
-
-    if (newAmount == 0) userIt->second.erase(item._name);
-    else if (newAmount < 0) return false;
-    else amount = newAmount;
-
-    return true;
-}
-
-template <Transaction::UpdateType T>
-bool Transaction::isInItemMap(const Item& item) {
-    auto it = _itemMap.find(item._name);
-
-    if (it == _itemMap.end()) return false;
-
-    if (T == Transaction::UpdateType::ADD) return true;
-
-    auto [amount, price] = it->second;
-
-    if (amount < item._amount || price != item._price) return false;
-
-    return true;
-}
-
-template <Transaction::UpdateType T>
-bool Transaction::isInUserMap(const Item& item, std::string userId) {
-    auto userIt = _userMap.find(userId);
-    if (userIt == _userMap.end()) return false;
-
-    auto itemIt = userIt->second.find(item._name);
-    if (itemIt == userIt->second.end()) return false;
-
-    if (T == Transaction::UpdateType::ADD) return true;
-
-    auto [amount, price] = itemIt->second;
-    if (item._amount > amount || item._price != price) return false;
-
-    return true;
-}
-
-template <Transaction::UpdateType T>
-bool Transaction::updateItemMap(const Item& item) {
-    if (!isInItemMap<T>(item)) {
-        if (T == Transaction::UpdateType::ADD) {
-            _itemMap.insert({item._name, {item._amount, item._price}});
-
-            return true;
-        }
-
-        return false;
-    }
-
-    auto& [amount, price] = _itemMap.find(item._name)->second;
-    
-    const int newAmount = T == Transaction::UpdateType::ADD ? amount + item._amount : amount - item._amount;
-
-    if (newAmount == 0) _itemMap.erase(item._name);
-    else if (newAmount < 0) return false;
-    else amount = newAmount;
-
-    return true;
 }

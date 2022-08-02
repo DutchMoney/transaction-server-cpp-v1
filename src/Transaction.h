@@ -28,13 +28,13 @@ public:
 
     const transaction_map getTransactionMap() const;
 
+    bool updateItemPrice(std::string name, float price);
+
     friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
     template <UpdateType T>
     bool updateUserItem(std::string userId, const Item& item) {
         if (!isUserInTransaction(userId)) return false;
-
-        if (!isItemUnused<T == ADD ? REMOVE : ADD>(item)) return false;
 
         if (!updateItemMap<T == ADD ? REMOVE : ADD>({item._name, item._amount, item._price})) return false;
 
@@ -99,13 +99,10 @@ private:
     bool updateItemMap(const Item& item) {
 
         if (!isItemUnused<T>(item)) {
-            if (T == UpdateType::ADD) {
-                _itemMap.insert({item._name, {item._amount, item._price}});
-
-                return true;
-            }
-
-            return false;
+            if (T == UpdateType::REMOVE) return false;
+            
+            _itemMap.insert({item._name, {item._amount, item._price}});
+            return true;
         }
 
         auto& [amount, price] = _itemMap.find(item._name)->second;

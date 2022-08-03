@@ -5,3 +5,36 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 1. Run ```cmake -S . -B build``` in the root directory to create build folder and generate Makefile.
 2. Run ```cmake --build build``` in the root directory to generate the ```app``` binary.
 3. Run ```./build/app``` 
+
+## Progress
+### Transaction - Single Threaded
+1. Create Transaction with list of items
+2. Check if user exists in transaction
+3. Add/remove user to transaction
+4. Update usr's item map
+5. Check if item is unused (validate amount and price)
+6. Check if user has item (validate amount and price)
+7. Update unused item map
+8. Get copy of entire transaction as a ```transaction_map```, unused items in ```unused``` key
+9. Print out transaction for easy visual debugging
+
+### Build Tools / Dependencies / Executables
+1. Added CMake for easier compilation
+
+## Future
+### Testing
+1. Add Google Test to CMake
+2. Add a testing module
+3. Add all tests and their description to README
+
+### Threading
+1. Add read/write locks per item/user in transaction
+2. Test out adding multiple items to multiple users concurrently
+
+### General Design
+1. Replace all current ```strings``` with ```string_views```
+2. Add Factory class for creating transactions (possible empty transaction, think about merging in the future but less important)
+3. User permissions, user can only update their own items
+4. Item UUIDs
+5. Transaction UUIDs
+6. Transaction manager to handle many transactions concurrently 

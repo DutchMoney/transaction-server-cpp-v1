@@ -38,3 +38,10 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 4. Item UUIDs
 5. Transaction UUIDs
 6. Transaction manager to handle many transactions concurrently 
+
+### Websockets
+1. Add Boost Beast and Booost ASIO as dependencies to CMake for future websockets
+2. Deal with making/parsing small JSON objects
+3. Think of big pictue product flow of a transacton (may require transaction states like ```finishTransaction``` etc.)
+4. Create high level framework on top of Boost Beast to run a Websocket Server, create server message formats
+4. JWT / Authentication / Authorization for Users

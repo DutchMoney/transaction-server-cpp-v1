@@ -22,8 +22,8 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 1. Added CMake for easier compilation
 
 ## Current Development
-- [] Add Google Test to CMake
-- [] Add single threaded tests
+- [ ] Add Google Test to CMake
+- [ ] Add single threaded tests
 
 ## Future
 ### Testing

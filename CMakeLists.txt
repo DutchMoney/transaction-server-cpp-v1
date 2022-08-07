@@ -1,9 +1,16 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.10)
 
 if(${CMAKE_VERSION} VERSION_LESS 3.23)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 else()
     cmake_policy(VERSION 3.23)
+endif()
+
+option(PACKAGE_TESTS "Build the tests" ON)
+if(PACKAGE_TESTS)
+    enable_testing()
+    include(GoogleTest)
+    add_subdirectory(tests)
 endif()
 
 project(TransactionServer VERSION 1.0

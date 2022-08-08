@@ -22,7 +22,7 @@ public:
 
     bool isUserInTransaction(std::string userId) const;
 
-    transaction_map::iterator addUserIfNotExists(std::string userId);
+    bool addUserIfNotExists(std::string userId);
 
     bool removeUser(std::string userId);
 

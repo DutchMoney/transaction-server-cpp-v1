@@ -17,16 +17,16 @@ bool Transaction::isUserInTransaction(std::string userId) const {
     return true;
 }
 
-transaction_map::iterator Transaction::addUserIfNotExists(std::string userId) {
+bool Transaction::addUserIfNotExists(std::string userId) {
     auto userIt = _userMap.find(userId);
 
-    if (userIt != _userMap.end()) return userIt;
+    if (userIt != _userMap.end()) return false;
 
     _userMap.insert({userId, {}});
 
     userIt = _userMap.find(userId);
 
-    return userIt;
+    return true;
 }
 
 bool Transaction::removeUser(std::string userId) {

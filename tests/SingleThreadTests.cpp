@@ -19,9 +19,11 @@ struct TransactionTest : public testing::Test {
 // Description: Adding users and checking if added correctly
 TEST_F(TransactionTest, addUser) {
     
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    EXPECT_EQ(t->addUserIfNotExists("preman"), 1);
+    EXPECT_EQ(t->addUserIfNotExists("preman2"), 1);
+    EXPECT_EQ(t->addUserIfNotExists("preman3"), 1);
+
+    EXPECT_FALSE(t->addUserIfNotExists("preman"));
 
     std::vector<std::string> users;
     for (auto& [user, items] : t->getTransactionMap()) {
@@ -43,7 +45,8 @@ TEST_F(TransactionTest, removeUser) {
     t->addUserIfNotExists("preman2");
     t->addUserIfNotExists("preman3");
 
-    t->removeUser("preman");
+    EXPECT_TRUE(t->removeUser("preman"));
+    EXPECT_FALSE(t->removeUser("james"));
 
     std::vector<std::string> users;
     for (auto& [user, items] : t->getTransactionMap()) {
@@ -65,13 +68,15 @@ TEST_F(TransactionTest, isUserInTransaction) {
     t->addUserIfNotExists("preman2");
     t->addUserIfNotExists("preman3");
 
-    EXPECT_EQ(t->isUserInTransaction("preman"), 1);
-    EXPECT_EQ(t->isUserInTransaction("preman2"), 1);
-    EXPECT_EQ(t->isUserInTransaction("preman3"), 1);
+    EXPECT_TRUE(t->isUserInTransaction("preman"));
+    EXPECT_TRUE(t->isUserInTransaction("preman2"));
+    EXPECT_TRUE(t->isUserInTransaction("preman3"));
+
+    EXPECT_FALSE(t->isUserInTransaction("james"));
 
     t->removeUser("preman");
 
-    EXPECT_EQ(t->isUserInTransaction("preman"), 0);
+    EXPECT_FALSE(t->isUserInTransaction("preman"));
 }
 
 //Test: Check valid unused price update

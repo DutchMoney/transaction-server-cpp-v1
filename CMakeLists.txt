@@ -10,6 +10,8 @@ project(TransactionServer VERSION 1.0
     DESCRIPTION "Transaction Server Library that will be plugged into a websocket server"
     LANGUAGES CXX)
 
+add_library(Transaction src/Transaction.cpp src/Transaction.h src/Item.cpp src/Item.h)
+
 option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS)
     enable_testing()
@@ -17,7 +19,6 @@ if(PACKAGE_TESTS)
     add_subdirectory(tests)
 endif()
 
-add_library(Transaction src/Transaction.cpp src/Transaction.h src/Item.cpp src/Item.h)
 
 add_executable(app apps/main.cpp)
 

@@ -13,7 +13,8 @@ set_target_properties(gmock_main PROPERTIES FOLDER extern)
 
 macro(package_add_test_with_libraries TESTNAME FILES LIBRARIES TEST_WORKING_DIRECTORY)
     add_executable(${TESTNAME} ${FILES})
-    target_include_directories(${TESTNAME} PUBLIC src)
+    set_property(TARGET ${TESTNAME} PROPERTY CXX_STANDARD 17)
+    target_include_directories(${TESTNAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
     target_link_libraries(${TESTNAME} gtest gmock gtest_main ${LIBRARIES})
     gtest_discover_tests(${TESTNAME}
         WORKING_DIRECTORY ${TEST_WORKING_DIRECTORY}
@@ -22,7 +23,4 @@ macro(package_add_test_with_libraries TESTNAME FILES LIBRARIES TEST_WORKING_DIRE
     set_target_properties(${TESTNAME} PROPERTIES FOLDER tests)
 endmacro()
 
-package_add_test_with_libraries(initTest main.cpp Transaction "${PROJECT_DIR}/european-test-data/")
-
-
-# package_add_test(test1 test1.cpp)
+package_add_test_with_libraries(initTest main.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")

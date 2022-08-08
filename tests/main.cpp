@@ -1,8 +1,13 @@
 #include <Transaction.h>
 #include <vector>
+#include <gtest/gtest.h>
 #include <iostream>
 
-int main() {
+TEST(TestSuite, TestName) {
+    ASSERT_TRUE(1 == 1);
+}
+
+int main(int argc, char** argv) {
     Transaction t {std::vector<Item> {{"apple", 5, 5}, {"banana", 10, 1}}}; 
 
     std::cout << t << std::endl;
@@ -22,6 +27,10 @@ int main() {
 
     sts = t.removeUser("preman");
     std::cout << t << std::endl;
+
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 
     return 0;
 }

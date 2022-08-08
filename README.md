@@ -22,8 +22,14 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 ### Build Tools / Dependencies / Executables
 1. Added CMake for easier compilation
 
+### Tests - Single Threaded
+1. ```addUserIfNotExists``` - Add users
+2. ```removeUser``` - Add then remove users
+3. ```isUserInTransaction``` - add users, check valid user, check invalid user.
+4. ```updateItemPrice``` - check updating non-existent item, valid price, invalid price, check all user's price
+5. ```updateUserItem``` - add users, check adding/remove non existent items. check adding/remove valid amount of items. check adding/removing invalid number of items
 ## Current Development
-- [ ] Add Google Test to CMake
+- [X] Add Google Test to CMake
 - [ ] Add single threaded tests
 
 ## Future

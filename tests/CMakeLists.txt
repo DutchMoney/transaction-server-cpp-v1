@@ -23,4 +23,4 @@ macro(package_add_test_with_libraries TESTNAME FILES LIBRARIES TEST_WORKING_DIRE
     set_target_properties(${TESTNAME} PROPERTIES FOLDER tests)
 endmacro()
 
-package_add_test_with_libraries(initTest main.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")
+package_add_test_with_libraries(SingleThreadTests SingleThreadTests.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")

@@ -19,11 +19,6 @@ if(PACKAGE_TESTS)
     add_subdirectory(tests)
 endif()
 
-
-add_executable(app apps/main.cpp)
-
-set_property(TARGET app Transaction
+set_property(TARGET Transaction
     PROPERTY CXX_STANDARD 17)
     
-target_include_directories(app PUBLIC src)
-target_link_libraries(app PUBLIC Transaction)

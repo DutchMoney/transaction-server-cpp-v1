@@ -55,24 +55,28 @@ const transaction_map Transaction::getTransactionMap() const {
 }
 
 bool Transaction::updateItemPrice(std::string name, float price) {
+    if (price < 0) return false;
+
     if (isItemUnused<ADD>({name, 0, price})) {
         auto itemIt = _itemMap.find(name);
 
         auto& [_amount, _price] = itemIt->second;
 
         _price = price;
+        
+        for (auto& userIt : _userMap) {
+            if (!isUserHasItem<ADD>({name, 0, price}, userIt.first)) continue;
+
+            auto itemIt = userIt.second.find(name);
+            auto& [_amount, _price] = itemIt->second;
+
+            _price = price;
+        }
+
+        return true;
     }
 
-    for (auto& userIt : _userMap) {
-        if (!isUserHasItem<ADD>({name, 0, price}, userIt.first)) continue;
-
-        auto itemIt = userIt.second.find(name);
-        auto& [_amount, _price] = itemIt->second;
-
-        _price = price;
-    }
-
-    return true;
+    return false;
 }
 
 std::ostream& operator<<(std::ostream& os, const Transaction& t) {

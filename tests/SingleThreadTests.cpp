@@ -19,11 +19,11 @@ struct TransactionTest : public testing::Test {
 // Description: Adding users and checking if added correctly
 TEST_F(TransactionTest, addUser) {
     
-    EXPECT_EQ(t->addUserIfNotExists("preman"), 1);
-    EXPECT_EQ(t->addUserIfNotExists("preman2"), 1);
-    EXPECT_EQ(t->addUserIfNotExists("preman3"), 1);
+    EXPECT_EQ(t->addUser("preman"), 1);
+    EXPECT_EQ(t->addUser("preman2"), 1);
+    EXPECT_EQ(t->addUser("preman3"), 1);
 
-    EXPECT_FALSE(t->addUserIfNotExists("preman"));
+    EXPECT_FALSE(t->addUser("preman"));
 
     std::vector<std::string> users;
     for (auto& [user, items] : t->getTransactionMap()) {
@@ -41,9 +41,9 @@ TEST_F(TransactionTest, addUser) {
 //Description: Removing users and checking if removed correctly
 TEST_F(TransactionTest, removeUser) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_TRUE(t->removeUser("preman"));
     EXPECT_FALSE(t->removeUser("james"));
@@ -64,9 +64,9 @@ TEST_F(TransactionTest, removeUser) {
 //Description: Assuming add users and remove users correct, check if can identify valid and invalid users
 TEST_F(TransactionTest, isUserInTransaction) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_TRUE(t->isUserInTransaction("preman"));
     EXPECT_TRUE(t->isUserInTransaction("preman2"));
@@ -124,9 +124,9 @@ TEST_F(TransactionTest, updateInvalidItemPrice) {
 TEST_F(TransactionTest, addInvalidUserItems) {
 
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::ADD>("preman4", {"apple", 3, 5}));
 
@@ -139,9 +139,9 @@ TEST_F(TransactionTest, addInvalidUserItems) {
 //Description: Check if removing items from invalid user doens't create new user or change the unused item amounts and gives correct status
 TEST_F(TransactionTest, removeInvalidUserItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman4", {"apple", 0, 5}));
 
@@ -154,9 +154,9 @@ TEST_F(TransactionTest, removeInvalidUserItems) {
 //Description: Check if trying to add a negtive number of items to a user returns fail response and leaves all maps untouched
 TEST_F(TransactionTest, addUserInvalidSmallItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", -5, 5 }));
 
@@ -171,9 +171,9 @@ TEST_F(TransactionTest, addUserInvalidSmallItems) {
 //Description: Check if trying to add too many items to a user returns fail response and leaves all maps untouched
 TEST_F(TransactionTest, addUserInvalidLargeItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 10, 5 }));
 
@@ -189,9 +189,9 @@ TEST_F(TransactionTest, addUserInvalidLargeItems) {
 //Description: Check if trying to remove a negtive number of items to a user returns fail response and leaves all maps untouched
 TEST_F(TransactionTest, removeUserInvalidNegativeItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman", {"apple", -5, 5 }));
 
@@ -206,9 +206,9 @@ TEST_F(TransactionTest, removeUserInvalidNegativeItems) {
 //Description: Check if trying to remove too many items to a user returns fail response and leaves all maps untouched
 TEST_F(TransactionTest, removeUserInvalidLargeItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     //Checking remove from user no apples
     EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman", {"apple", 1, 5 }));
@@ -231,9 +231,9 @@ TEST_F(TransactionTest, removeUserInvalidLargeItems) {
 //Description: Check if some of an item can be added to an empty user, all statuses correct and corret amounts for user and unused 
 TEST_F(TransactionTest, addEmptyUserValidItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5}));
 
@@ -246,9 +246,9 @@ TEST_F(TransactionTest, addEmptyUserValidItems) {
 //Description: Check if an item can be added to a user that already contains that item, all statuses correct and correct amounts for user and unused
 TEST_F(TransactionTest, addExistingUserValidItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
 
@@ -263,9 +263,9 @@ TEST_F(TransactionTest, addExistingUserValidItems) {
 //Description: check if the remaining in unused of an item can be added to a user, all statuses correct and unusued should be 0, correct amounts for user also
 TEST_F(TransactionTest, addExistingUserValidAllItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
 
@@ -284,9 +284,9 @@ TEST_F(TransactionTest, addExistingUserValidAllItems) {
 //Description: check if some of the remaining of an item in user can be removed from user and added back to unused, all statuses correct and corect amounts for user and unused
 TEST_F(TransactionTest, removeExistingUserValidItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
 
@@ -300,9 +300,9 @@ TEST_F(TransactionTest, removeExistingUserValidItems) {
 //Description: check if the remaining of an item in user can be removed from user and added back to unused, all statuses correct and user should not have item key anymore in map
 TEST_F(TransactionTest, removeExistingUserValidAllItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 5, 5});
 
@@ -320,9 +320,9 @@ TEST_F(TransactionTest, removeExistingUserValidAllItems) {
 //Description: Check if multiple users can take multiple items, then once removed, the items should be back in unused map
 TEST_F(TransactionTest, removeUsersWithItems) {
 
-    t->addUserIfNotExists("preman");
-    t->addUserIfNotExists("preman2");
-    t->addUserIfNotExists("preman3");
+    t->addUser("preman");
+    t->addUser("preman2");
+    t->addUser("preman3");
 
     t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
     t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"banana", 5, 1});

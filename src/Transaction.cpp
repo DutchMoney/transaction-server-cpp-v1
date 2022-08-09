@@ -17,7 +17,7 @@ bool Transaction::isUserInTransaction(std::string userId) const {
     return true;
 }
 
-bool Transaction::addUserIfNotExists(std::string userId) {
+bool Transaction::addUser(std::string userId) {
     auto userIt = _userMap.find(userId);
 
     if (userIt != _userMap.end()) return false;

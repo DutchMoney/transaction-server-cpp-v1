@@ -22,7 +22,7 @@ public:
 
     bool isUserInTransaction(std::string userId) const;
 
-    bool addUserIfNotExists(std::string userId);
+    bool addUser(std::string userId);
 
     bool removeUser(std::string userId);
 
@@ -58,6 +58,8 @@ private:
     bool isUserHasItem(const Item& item, std::string userId) const {
 
         if(!isUserInTransaction(userId)) return false;
+
+        auto userIt = _userMap.find(userId);
 
         auto itemIt = userIt->second.find(item._name);
         if (itemIt == userIt->second.end()) return false;

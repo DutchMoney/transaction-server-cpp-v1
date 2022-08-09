@@ -12,7 +12,7 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 1. Create Transaction with list of items
 2. Check if user exists in transaction
 3. Add/remove user to transaction
-4. Update usr's item map
+4. Update user's item map
 5. Check if item is unused (validate amount and price)
 6. Check if user has item (validate amount and price)
 7. Update unused item map
@@ -23,7 +23,7 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 1. Added CMake for easier compilation
 
 ### Tests - Single Threaded
-1. ```addUserIfNotExists``` - Add users
+1. ```addUser``` - Add users
 2. ```removeUser``` - Add then remove users + check if items are returned
 3. ```isUserInTransaction``` - add users, check valid user, check invalid user.
 4. ```updateItemPrice``` - check updating non-existent item, valid price, invalid price, check all user's price

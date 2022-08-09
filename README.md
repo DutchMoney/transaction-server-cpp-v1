@@ -36,7 +36,8 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 
 ## Future
 ### Threading
-1. Add read/write locks per item/user in transaction
+1. Test out adding multiple items to multiple users concurrently
+2. Add read/write locks per item/user in transaction
 
 ### General Design
 1. Replace tuples with items/user objects
@@ -48,8 +49,8 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 7. Transaction manager to handle many transactions concurrently 
 
 ### Websockets
-1. Add Boost Beast and Booost ASIO as dependencies to CMake for future websockets
-2. Deal with making/parsing small JSON objects
+1. Deal with making/parsing small JSON objects & making message formats for actions
+2. Add Boost Beast and Booost ASIO as dependencies to CMake for future websockets
 3. Think of big pictue product flow of a transacton (may require transaction states like ```finishTransaction``` etc.)
 4. Create high level framework on top of Boost Beast to run a Websocket Server, create server message formats
 4. JWT / Authentication / Authorization for Users

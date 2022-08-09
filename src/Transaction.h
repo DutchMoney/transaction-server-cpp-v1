@@ -57,8 +57,7 @@ private:
     template <UpdateType T>
     bool isUserHasItem(const Item& item, std::string userId) const {
 
-        auto userIt = _userMap.find(userId);
-        if (userIt == _userMap.end()) return false;
+        if(!isUserInTransaction(userId)) return false;
 
         auto itemIt = userIt->second.find(item._name);
         if (itemIt == userIt->second.end()) return false;

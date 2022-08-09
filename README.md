@@ -33,6 +33,7 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 - [X] Add single threaded tests
 - [X] Add all tests and their description to README
 - [ ] Test out adding multiple items to multiple users concurrently
+- [ ] Add read/write locks per item/user in transaction
 
 ## Future
 ### Threading

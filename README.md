@@ -43,12 +43,13 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 2. Test out adding multiple items to multiple users concurrently
 
 ### General Design
-1. Replace all current ```strings``` with ```string_views```
-2. Add Factory class for creating transactions (possible empty transaction, think about merging in the future but less important)
-3. User permissions, user can only update their own items
-4. Item UUIDs
-5. Transaction UUIDs
-6. Transaction manager to handle many transactions concurrently 
+1. Replace tuples with items/user objects
+2. Replace all current ```strings``` with ```string_views```
+3. Add Factory class for creating transactions (possible empty transaction, think about merging in the future but less important)
+4. User permissions, user can only update their own items
+5. Item UUIDs
+6. Transaction UUIDs
+7. Transaction manager to handle many transactions concurrently 
 
 ### Websockets
 1. Add Boost Beast and Booost ASIO as dependencies to CMake for future websockets

@@ -32,16 +32,11 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 - [X] Add Google Test to CMake
 - [X] Add single threaded tests
 - [X] Add all tests and their description to README
+- [ ] Test out adding multiple items to multiple users concurrently
 
 ## Future
-### Testing
-1. Add Google Test to CMake
-2. Add a testing module
-3. Add all tests and their description to README
-
 ### Threading
 1. Add read/write locks per item/user in transaction
-2. Test out adding multiple items to multiple users concurrently
 
 ### General Design
 1. Replace tuples with items/user objects

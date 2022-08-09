@@ -109,9 +109,8 @@ private:
     
         const int newAmount = T == UpdateType::ADD ? amount + item._amount : amount - item._amount;
 
-        if (newAmount == 0) _itemMap.erase(item._name);
-        else if (newAmount < 0) return false;
-        else amount = newAmount;
+        if (newAmount >= 0) amount = newAmount;
+        else return false;
 
         return true;
     }

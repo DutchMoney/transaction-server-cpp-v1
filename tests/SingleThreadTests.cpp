@@ -119,6 +119,92 @@ TEST_F(TransactionTest, updateInvalidItemPrice) {
     EXPECT_FALSE(status);
 }
 
+//Test: check invalid user, valid add items
+// Description: Check if adding items to an invalid user doesn't create new user or changed the unused item amounts and gives correct status
+TEST_F(TransactionTest, addInvalidUserItems) {
+
+
+    t->addUserIfNotExists("preman");
+    t->addUserIfNotExists("preman2");
+    t->addUserIfNotExists("preman3");
+
+    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::ADD>("preman4", {"apple", 3, 5}));
+
+    EXPECT_TRUE(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second) == 5);
+
+    EXPECT_FALSE(t->isUserInTransaction("preman4"));
+}
+
+//Test: check invalid user, valid remove items
+//Description: Check if removing items from invalid user doens't create new user or change the unused item amounts and gives correct status
+TEST_F(TransactionTest, removeInvalidUserItems) {
+
+    t->addUserIfNotExists("preman");
+    t->addUserIfNotExists("preman2");
+    t->addUserIfNotExists("preman3");
+
+    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman4", {"apple", 0, 5}));
+
+    EXPECT_TRUE(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second) == 5);
+
+    EXPECT_FALSE(t->isUserInTransaction("preman4"));
+}
+
+//Test: check valid user, add valid items
+//Description: Check if some of an item can be added to an empty user, all statuses correct and corret amounts for user and unused 
+TEST_F(TransactionTest, addEmptyUserValidItems) {
+
+    t->addUserIfNotExists("preman");
+    t->addUserIfNotExists("preman2");
+    t->addUserIfNotExists("preman3");
+
+    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5}));
+
+    EXPECT_EQ(std::get<0>(t->getTransactionMap().find("preman")->second.find("apple")->second), 3);
+    EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 2);
+
+}
+
+//Test: check valid user with items already, add more items
+//Description: Check if an item can be added to a user that already contains that item, all statuses correct and correct amounts for user and unused
+TEST_F(TransactionTest, addExistingUserValidItems) {
+
+    t->addUserIfNotExists("preman");
+    t->addUserIfNotExists("preman2");
+    t->addUserIfNotExists("preman3");
+
+    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
+
+    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 1, 5}));
+
+
+    EXPECT_EQ(std::get<0>(t->getTransactionMap().find("preman")->second.find("apple")->second), 4);
+    EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 1);
+}
+
+//Test: check valid user with items already, add rest of items
+//Description: check if th remaining in unused of an item can be added to a user, all statuses correct and unusued should be 0, correct amounts for user also
+TEST_F(TransactionTest, addExistingUserValidAllItems) {
+
+    t->addUserIfNotExists("preman");
+    t->addUserIfNotExists("preman2");
+    t->addUserIfNotExists("preman3");
+
+    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
+
+    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5}));
+
+    auto tMap = t->getTransactionMap();
+    auto applesIt = tMap.find("unused")->second.find("apple");
+
+    ASSERT_TRUE(applesIt != tMap.find("unused")->second.end());
+    
+    EXPECT_EQ(std::get<0>(t->getTransactionMap().find("preman")->second.find("apple")->second), 5);
+    EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 0);
+}
+
+
+
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
 

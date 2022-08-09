@@ -24,13 +24,14 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 
 ### Tests - Single Threaded
 1. ```addUserIfNotExists``` - Add users
-2. ```removeUser``` - Add then remove users
+2. ```removeUser``` - Add then remove users + check if items are returned
 3. ```isUserInTransaction``` - add users, check valid user, check invalid user.
 4. ```updateItemPrice``` - check updating non-existent item, valid price, invalid price, check all user's price
 5. ```updateUserItem``` - add users, check adding/remove non existent items. check adding/remove valid amount of items. check adding/removing invalid number of items
 ## Current Development
 - [X] Add Google Test to CMake
-- [ ] Add single threaded tests
+- [X] Add single threaded tests
+- [X] Add all tests and their description to README
 
 ## Future
 ### Testing

@@ -33,37 +33,13 @@ public:
     friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
     template <UpdateType T>
-    bool updateUserItem(std::string userId, const Item& item) {
-        if (!isUserInTransaction(userId)) return false;
-
-        if (!updateItemMap<T == ADD ? REMOVE : ADD>({item._name, item._amount, item._price})) return false;
-
-        auto userIt = _userMap.find(userId);
-
-        auto itemIt = userIt->second.find(item._name);
-        if (itemIt == userIt->second.end()) {
-            if (T == UpdateType::REMOVE) return false;
-        
-            userIt->second.insert({item._name, {item._amount, item._price}});
-
-            return true;
-        }
-
-        auto& [amount, price] = itemIt->second;
-        const int newAmount = T == UpdateType::ADD ? amount + item._amount : amount - item._amount;
-
-        if (newAmount == 0) userIt->second.erase(item._name);
-        else if (newAmount < 0) return false;
-        else amount = newAmount;
-
-        return true;
-    }
-
+    bool updateUserItem(std::string userId, const Item& item);
 
 private:
 
     template <UpdateType T>
     bool isItemUnused(const Item& item) const {
+        if (item._amount < 0) return false;
 
         auto it = _itemMap.find(item._name);
 

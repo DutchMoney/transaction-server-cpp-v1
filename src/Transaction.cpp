@@ -109,3 +109,53 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
 
     return os;
 }
+
+template <>
+bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(std::string userId, const Item& item) {
+
+    if (!isUserInTransaction(userId)) return false;
+
+    if (!updateItemMap<REMOVE>({item._name, item._amount, item._price})) return false;
+
+    auto userIt = _userMap.find(userId);
+
+    auto itemIt = userIt->second.find(item._name);
+    if (itemIt == userIt->second.end()) {
+        userIt->second.insert({item._name, {item._amount, item._price}});
+
+        return true;
+    }
+
+    auto& [amount, price] = itemIt->second;
+    const int newAmount =  amount + item._amount; 
+
+    if (newAmount == 0) userIt->second.erase(item._name);
+    else if (newAmount < 0) return false;
+    else amount = newAmount;
+
+    return true;
+}
+
+template <>
+bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(std::string userId, const Item& item) {
+
+    if (!isUserInTransaction(userId)) return false;
+
+    auto userIt = _userMap.find(userId);
+
+    auto itemIt = userIt->second.find(item._name);
+    if (itemIt == userIt->second.end()) return false;
+
+    auto& [amount, price] = itemIt->second;
+    const int newAmount = amount - item._amount;
+
+    if (newAmount == 0) userIt->second.erase(item._name);
+    else if (newAmount < 0) return false;
+    else amount = newAmount;
+
+    if (!updateItemMap<ADD>({item._name, item._amount, item._price})) return false;
+
+
+    return true;
+}
+

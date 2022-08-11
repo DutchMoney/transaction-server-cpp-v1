@@ -55,3 +55,8 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 3. Think of big pictue product flow of a transacton (may require transaction states like ```finishTransaction``` etc.)
 4. Create high level framework on top of Boost Beast to run a Websocket Server, create server message formats
 4. JWT / Authentication / Authorization for Users
+
+## Thoughts
+- Need to use acquire-release semantic to decrease lock usage as much as possible
+- Prefer task bansed over threasd based concurrency
+- I'm basically building a cache, soon need to start thinking about the architecture and how to fit it in, otherwise I'm basically rebuilding redis

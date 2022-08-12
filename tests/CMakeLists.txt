@@ -24,3 +24,4 @@ macro(package_add_test_with_libraries TESTNAME FILES LIBRARIES TEST_WORKING_DIRE
 endmacro()
 
 package_add_test_with_libraries(SingleThreadTests SingleThreadTests.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")
+package_add_test_with_libraries(MultiThreadTests MultiThreadTests.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")

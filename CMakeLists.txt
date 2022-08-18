@@ -11,14 +11,12 @@ project(TransactionServer VERSION 1.0
     LANGUAGES CXX)
 
 add_library(Transaction src/Transaction.cpp src/Transaction.h src/Item.cpp src/Item.h)
-
+set_property(TARGET Transaction
+    PROPERTY CXX_STANDARD 17)
+    
 option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS)
     enable_testing()
     include(GoogleTest)
     add_subdirectory(tests)
 endif()
-
-set_property(TARGET Transaction
-    PROPERTY CXX_STANDARD 17)
-    

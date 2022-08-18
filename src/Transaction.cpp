@@ -47,8 +47,10 @@ bool Transaction::removeUser(std::string userId) {
 }
 
 const transaction_map Transaction::getTransactionMap() const {
-    transaction_map tsMap{_userMap};
 
+    std::shared_lock<std::shared_mutex> readLock{transactionItemMutex};
+
+    auto tsMap = transaction_map{_userMap};
     tsMap.insert({"unused", _itemMap});
 
     return tsMap;
@@ -115,7 +117,7 @@ bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(std::string userI
 
     if (!isUserInTransaction(userId)) return false;
 
-    if (!updateItemMap<REMOVE>({item._name, item._amount, item._price})) return false;
+    if (!updateItemMap<REMOVE>(item)) return false;
 
     auto userIt = _userMap.find(userId);
 
@@ -149,12 +151,15 @@ bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(std::string us
     auto& [amount, price] = itemIt->second;
     const int newAmount = amount - item._amount;
 
-    if (newAmount == 0) userIt->second.erase(item._name);
+    if (newAmount == 0) {
+        if (!updateItemMap<ADD>(item)) return false;
+        userIt->second.erase(item._name);
+    }
     else if (newAmount < 0) return false;
-    else amount = newAmount;
-
-    if (!updateItemMap<ADD>({item._name, item._amount, item._price})) return false;
-
+    else {
+        if (!updateItemMap<ADD>(item)) return false;
+        amount = newAmount;
+    }
 
     return true;
 }

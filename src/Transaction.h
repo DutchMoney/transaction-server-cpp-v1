@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <shared_mutex>
+#include <mutex>
 #include <thread>
 
 typedef std::unordered_map<std::string, std::tuple<int, float>> item_map;
@@ -16,7 +17,6 @@ class Transaction {
 
 public:
     Transaction(const std::vector<Item>& items);
-
 
     enum UpdateType {
         ADD,

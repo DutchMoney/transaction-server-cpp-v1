@@ -32,8 +32,8 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 - [X] Add Google Test to CMake
 - [X] Add single threaded tests
 - [X] Add all tests and their description to README
-- [ ] Test out adding multiple items to multiple users concurrently
-- [ ] Add read/write locks per item/user in transaction
+- [X] Test out adding multiple items to multiple users concurrently
+- [X] Add read/write locks per item/user in transaction (only added a reader writer lock for the item map)
 
 ## Future
 ### Threading
@@ -43,11 +43,11 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 ### General Design
 1. Replace tuples with items/user objects
 2. Replace all current ```strings``` with ```string_views```
-3. Add Factory class for creating transactions (possible empty transaction, think about merging in the future but less important)
-4. User permissions, user can only update their own items
-5. Item UUIDs
-6. Transaction UUIDs
-7. Transaction manager to handle many transactions concurrently 
+3. Transaction manager to add a wrapper to update multiple transactions 
+4. Add Factory class for creating transactions (possible empty transaction, user id, transaction id, think about merging in the future but less important)
+5. User permissions, user can only update their own items
+6. Item UUIDs
+7. Transaction UUIDs
 
 ### Websockets
 1. Deal with making/parsing small JSON objects & making message formats for actions

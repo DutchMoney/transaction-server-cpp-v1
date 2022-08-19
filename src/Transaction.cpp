@@ -113,7 +113,7 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
 }
 
 template <>
-bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(std::string userId, const Item& item) {
+bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(const std::string& userId, const Item& item) {
 
     if (!isUserInTransaction(userId)) return false;
 
@@ -139,7 +139,7 @@ bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(std::string userI
 }
 
 template <>
-bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(std::string userId, const Item& item) {
+bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(const std::string& userId, const Item& item) {
 
     if (!isUserInTransaction(userId)) return false;
 
@@ -152,11 +152,11 @@ bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(std::string us
     const int newAmount = amount - item._amount;
 
     if (newAmount == 0) {
-        if (!updateItemMap<ADD>(item)) return false;
+        if (!updateItemMap<Transaction::UpdateType::ADD>(item)) return false;
         userIt->second.erase(item._name);
     }
     else if (newAmount > 0) {
-        if (!updateItemMap<ADD>(item)) return false;
+        if (!updateItemMap<Transaction::UpdateType::ADD>(item)) return false;
         amount = newAmount;
     }
     else return false;

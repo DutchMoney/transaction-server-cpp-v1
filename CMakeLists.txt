@@ -10,7 +10,7 @@ project(TransactionServer VERSION 1.0
     DESCRIPTION "Transaction Server Library that will be plugged into a websocket server"
     LANGUAGES CXX)
 
-add_library(Transaction src/Transaction.cpp src/Transaction.h src/Item.cpp src/Item.h)
+add_library(Transaction src/Transaction.cpp src/Transaction.h src/Item.cpp src/Item.h src/TransactionManager.cpp src/TransactionManager.h)
 set_property(TARGET Transaction
     PROPERTY CXX_STANDARD 17)
     

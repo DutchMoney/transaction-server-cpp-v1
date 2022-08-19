@@ -36,7 +36,7 @@ public:
     friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
     template <UpdateType T>
-    bool updateUserItem(std::string userId, const Item& item);
+    bool updateUserItem(const std::string& userId, const Item& item);
 
 private:
 

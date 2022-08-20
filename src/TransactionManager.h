@@ -33,14 +33,14 @@ public:
         return transIt->second.updateUserItem<U>(userId, item);
     }
 
-    bool addTransaction(const std::string& tId, Transaction&& t);
+    bool addTransaction(std::string tId, Transaction t);
 
     bool removeTransaction(const std::string& tId);
 
     transaction_map printTransaction(const std::string& tId);
 
 private:
-    std::unordered_map<std::string_view, Transaction> _transactionManagerMap;
+    std::unordered_map<std::string, Transaction> _transactionManagerMap;
 
 };
 

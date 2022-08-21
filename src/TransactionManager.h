@@ -8,6 +8,9 @@
 class TransactionManager {
     
 public:
+
+    TransactionManager() : _transactionManagerMap({}) {};
+
     enum UserActions {
         CHECK_USER,
         ADD_USER,
@@ -33,7 +36,7 @@ public:
         return transIt->second.updateUserItem<U>(userId, item);
     }
 
-    bool addTransaction(std::string tId, Transaction t);
+    bool addTransaction(const std::string& tId, const Transaction& t);
 
     bool removeTransaction(const std::string& tId);
 

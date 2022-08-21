@@ -48,7 +48,7 @@ bool Transaction::removeUser(std::string userId) {
 
 const transaction_map Transaction::getTransactionMap() const {
 
-    std::shared_lock<std::shared_timed_mutex> readLock{transactionItemMutex};
+    std::shared_lock<std::shared_mutex> readLock{transactionItemMutex};
 
     auto tsMap = transaction_map{_userMap};
     tsMap.insert({"unused", _itemMap});

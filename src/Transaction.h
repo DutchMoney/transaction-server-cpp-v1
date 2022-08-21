@@ -62,7 +62,7 @@ private:
     template <UpdateType T>
     bool isItemUnused(const Item& item) const {
         
-        std::shared_lock<std::shared_timed_mutex> readLock{transactionItemMutex};
+        std::shared_lock<std::shared_mutex> readLock{transactionItemMutex};
 
         if (item._amount < 0) return false;
 
@@ -83,13 +83,13 @@ private:
         if (!isItemUnused<T>(item)) {
             if (T == UpdateType::REMOVE) return false;
             
-            std::scoped_lock<std::shared_timed_mutex> writeLock{transactionItemMutex};
+            std::scoped_lock<std::shared_mutex> writeLock{transactionItemMutex};
             
             _itemMap.insert({item._name, {item._amount, item._price}});
             return true;
         }
 
-        std::scoped_lock<std::shared_timed_mutex> writeLock{transactionItemMutex};
+        std::scoped_lock<std::shared_mutex> writeLock{transactionItemMutex};
 
         auto& [amount, price] = _itemMap.find(item._name)->second;
         const int newAmount = T == UpdateType::ADD ? amount + item._amount : amount - item._amount;
@@ -102,7 +102,7 @@ private:
 
     item_map _itemMap;
     transaction_map _userMap;
-    mutable std::shared_timed_mutex transactionItemMutex;
+    mutable std::shared_mutex transactionItemMutex;
 };
 
 #endif

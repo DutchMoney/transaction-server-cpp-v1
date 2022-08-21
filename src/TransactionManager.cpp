@@ -34,11 +34,12 @@ bool TransactionManager::updateTransaction<TransactionManager::UserActions::UPDA
     return transIt->second.updateItemPrice(itemName, itemPrice);
 }
 
-bool TransactionManager::addTransaction(std::string tId, Transaction t) {
+bool TransactionManager::addTransaction(const std::string& tId, const Transaction& t) {
      
     auto transIt = _transactionManagerMap.find(tId);
     if (transIt != _transactionManagerMap.end()) return false;
 
-    _transactionManagerMap.insert({tId, t});
+    auto [it, isInserted] = _transactionManagerMap.emplace({tId, t});
 
+    return isInserted;
 }

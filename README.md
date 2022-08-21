@@ -38,12 +38,12 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 ## Future
 ### Threading
 1. Test out adding multiple items to multiple users concurrently
-2. Add read/write locks per item/user in transaction
+2. Add read/write locks per item/user in transaction - Currently exists locks for ```item_map```
 
 ### General Design
 1. Replace tuples with items/user objects
-2. Replace all current ```strings``` with ```string_views```
-3. Transaction manager to add a wrapper to update multiple transactions 
+2. Replace all current ```strings``` with ```string_views``` - DONE
+3. Transaction manager to add a wrapper to update multiple transactions - DONE but requires constructor to initialize, and a structure messages
 4. Add Factory class for creating transactions (possible empty transaction, user id, transaction id, think about merging in the future but less important)
 5. User permissions, user can only update their own items
 6. Item UUIDs
@@ -57,6 +57,6 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 4. JWT / Authentication / Authorization for Users
 
 ## Thoughts
-- Need to use acquire-release semantic to decrease lock usage as much as possible
+- Need to use acquire-release semantic to decrease lock usage as much as possible - starting with a shared mutex to allow concurrent reads and writes, but eventually need to move to TBB ```concurrent_hash_map```
 - Prefer task bansed over threasd based concurrency
 - I'm basically building a cache, soon need to start thinking about the architecture and how to fit it in, otherwise I'm basically rebuilding redis

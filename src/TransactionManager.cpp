@@ -1,7 +1,7 @@
 #include "TransactionManager.h"
 
 template <>
-bool TransactionManager::updateTransaction<TransactionManager::UserActions::CHECK_USER>(const std::string& tId, const std::string& userId) {
+bool TransactionManager::updateTransaction<TransactionManager::UserActions::CHECK_USER>(const std::string_view& tId, const std::string_view& userId) {
     auto transIt = _transactionManagerMap.find(tId);
     if (transIt == _transactionManagerMap.end())  return false;
 
@@ -9,7 +9,7 @@ bool TransactionManager::updateTransaction<TransactionManager::UserActions::CHEC
 }
 
 template <>
-bool TransactionManager::updateTransaction<TransactionManager::UserActions::ADD_USER>(const std::string& tId, const std::string& userId) {
+bool TransactionManager::updateTransaction<TransactionManager::UserActions::ADD_USER>(const std::string_view& tId, const std::string_view& userId) {
     auto transIt = _transactionManagerMap.find(tId);
     if (transIt == _transactionManagerMap.end())  return false;
 
@@ -17,7 +17,7 @@ bool TransactionManager::updateTransaction<TransactionManager::UserActions::ADD_
 }
 
 template<>
-bool TransactionManager::updateTransaction<TransactionManager::UserActions::REMOVE_USER>(const std::string& tId, const std::string& userId) {
+bool TransactionManager::updateTransaction<TransactionManager::UserActions::REMOVE_USER>(const std::string_view& tId, const std::string_view& userId) {
 
     auto transIt = _transactionManagerMap.find(tId);
     if (transIt == _transactionManagerMap.end())  return false;
@@ -26,7 +26,7 @@ bool TransactionManager::updateTransaction<TransactionManager::UserActions::REMO
 }
 
 template <>
-bool TransactionManager::updateTransaction<TransactionManager::UserActions::UPDATE_ITEM_PRICE>(const std::string& tId, const std::string& userId, const std::string& itemName, float itemPrice) {
+bool TransactionManager::updateTransaction<TransactionManager::UserActions::UPDATE_ITEM_PRICE>(const std::string_view& tId, const std::string_view& userId, const std::string_view& itemName, float itemPrice) {
 
     auto transIt = _transactionManagerMap.find(tId);
     if (transIt == _transactionManagerMap.end())  return false;
@@ -34,12 +34,28 @@ bool TransactionManager::updateTransaction<TransactionManager::UserActions::UPDA
     return transIt->second.updateItemPrice(itemName, itemPrice);
 }
 
-bool TransactionManager::addTransaction(const std::string& tId, const Transaction& t) {
+bool TransactionManager::addTransaction(std::string_view tId, Transaction&& t) {
      
     auto transIt = _transactionManagerMap.find(tId);
     if (transIt != _transactionManagerMap.end()) return false;
 
-    auto [it, isInserted] = _transactionManagerMap.emplace({tId, t});
+    auto [it, isInserted] = _transactionManagerMap.insert({tId, std::move(t)});
 
     return isInserted;
+}
+
+bool TransactionManager::removeTransaction(const std::string_view& tId) {
+    auto transIt = _transactionManagerMap.find(tId);
+    if (transIt == _transactionManagerMap.end()) return false;
+
+    bool isRemoved = _transactionManagerMap.erase(tId);
+
+    return isRemoved; 
+}
+
+transaction_map TransactionManager::printTransaction(const std::string_view& tId) {
+    auto transIt = _transactionManagerMap.find(tId);
+    if (transIt == _transactionManagerMap.end()) return {};
+
+    return transIt->second.getTransactionMap();
 }

@@ -9,8 +9,8 @@
 #include <mutex>
 #include <thread>
 
-typedef std::unordered_map<std::string, std::tuple<int, float>> item_map;
-typedef std::unordered_map<std::string, item_map> transaction_map;
+typedef std::unordered_map<std::string_view, std::tuple<int, float>> item_map;
+typedef std::unordered_map<std::string_view, item_map> transaction_map;
 
 
 class Transaction {
@@ -18,31 +18,33 @@ class Transaction {
 public:
     Transaction(const std::vector<Item>& items);
 
+    Transaction(const Transaction& t);
+
     enum UpdateType {
         ADD,
         REMOVE
     };
 
-    bool isUserInTransaction(std::string userId) const;
+    bool isUserInTransaction(std::string_view userId) const;
 
-    bool addUser(std::string userId);
+    bool addUser(std::string_view userId);
 
-    bool removeUser(std::string userId);
+    bool removeUser(std::string_view userId);
 
     const transaction_map getTransactionMap() const;
 
-    bool updateItemPrice(std::string name, float price);
+    bool updateItemPrice(std::string_view name, float price);
 
     friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
     template <UpdateType T>
-    bool updateUserItem(const std::string& userId, const Item& item);
+    bool updateUserItem(const std::string_view& userId, const Item& item);
 
 private:
 
 
     template <UpdateType T>
-    bool isUserHasItem(const Item& item, std::string userId) const {
+    bool isUserHasItem(const Item& item, std::string_view userId) const {
 
         if(!isUserInTransaction(userId)) return false;
 

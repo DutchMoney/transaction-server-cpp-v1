@@ -1,6 +1,7 @@
 #include "Transaction.h"
 #include <functional>
 #include <iomanip>
+#include <shared_mutex>
 
 Transaction::Transaction(const std::vector<Item>& items) {
 
@@ -9,7 +10,15 @@ Transaction::Transaction(const std::vector<Item>& items) {
     }
 }
 
-bool Transaction::isUserInTransaction(std::string userId) const {
+Transaction::Transaction(const Transaction& t) : transactionItemMutex{} {
+    std::scoped_lock<std::shared_mutex> lock{t.transactionItemMutex};
+
+    _itemMap = t._itemMap;
+    _userMap = t._userMap;
+
+}
+
+bool Transaction::isUserInTransaction(std::string_view userId) const {
     auto userIt = _userMap.find(userId);
 
     if (userIt == _userMap.end()) return false;
@@ -17,7 +26,7 @@ bool Transaction::isUserInTransaction(std::string userId) const {
     return true;
 }
 
-bool Transaction::addUser(std::string userId) {
+bool Transaction::addUser(std::string_view userId) {
     auto userIt = _userMap.find(userId);
 
     if (userIt != _userMap.end()) return false;
@@ -29,14 +38,14 @@ bool Transaction::addUser(std::string userId) {
     return true;
 }
 
-bool Transaction::removeUser(std::string userId) {
+bool Transaction::removeUser(std::string_view userId) {
     if (!isUserInTransaction(std::ref(userId))) return false; 
 
     auto it = _userMap.find(userId);
 
     for (auto& itemPair : it->second) {
         const auto& [name, itemDescPair] = itemPair;
-        const auto& [amount, price] = itemDescPair;
+        const auto [amount, price] = itemDescPair;
 
         updateItemMap<ADD>({name, amount, price});
     }
@@ -56,7 +65,7 @@ const transaction_map Transaction::getTransactionMap() const {
     return tsMap;
 }
 
-bool Transaction::updateItemPrice(std::string name, float price) {
+bool Transaction::updateItemPrice(std::string_view name, float price) {
     if (price < 0) return false;
 
     if (isItemUnused<ADD>({name, 0, price})) {
@@ -99,10 +108,10 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
         for (auto& itemIt : userIt.second) {
             os << "|_______|_______|_______|_________" << std::endl;
             auto& [amount, price] = itemIt.second;
-            os << std::left << std::setw(8) << std::setfill(' ') << "| "+std::to_string(a++);
-            os << std::left << std::setw(8) << std::setfill(' ') << "| "+itemIt.first;
-            os << std::left << std::setw(8) << std::setfill(' ') << "| "+std::to_string(amount);
-            os << std::left << std::setw(8) << std::setfill(' ') << "| "+std::to_string(price) << std::endl;
+            os << std::left << std::setw(8) << std::setfill(' ') << "| " + std::to_string(a++);
+            os << std::left << std::setw(8) << std::setfill(' ') << "| " + std::string{itemIt.first};
+            os << std::left << std::setw(8) << std::setfill(' ') << "| " + std::to_string(amount);
+            os << std::left << std::setw(8) << std::setfill(' ') << "| " + std::to_string(price) << std::endl;
         }
         os << "|------------------------------" << std::endl;
     }
@@ -113,7 +122,7 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
 }
 
 template <>
-bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(const std::string& userId, const Item& item) {
+bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(const std::string_view& userId, const Item& item) {
 
     if (!isUserInTransaction(userId)) return false;
 
@@ -139,7 +148,7 @@ bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(const std::string
 }
 
 template <>
-bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(const std::string& userId, const Item& item) {
+bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(const std::string_view& userId, const Item& item) {
 
     if (!isUserInTransaction(userId)) return false;
 

@@ -21,13 +21,13 @@ public:
     };
 
     template <UserActions T> 
-    bool updateTransaction(const std::string& tId, const std::string& userId);
+    bool updateTransaction(const std::string_view& tId, const std::string_view& userId);
 
     template <UserActions T> 
-    bool updateTransaction(const std::string& tId, const std::string& userId, const std::string& itemName, float itemPrice);
+    bool updateTransaction(const std::string_view& tId, const std::string_view& userId, const std::string_view& itemName, float itemPrice);
 
     template <UserActions T, Transaction::UpdateType U> 
-    bool updateTransaction(const std::string& tId, const std::string& userId, Item&& item) {
+    bool updateTransaction(const std::string_view& tId, const std::string_view& userId, Item&& item) {
         if (T != UPDATE_USER_ITEMS) return false;
 
         auto transIt = _transactionManagerMap.find(tId);
@@ -36,14 +36,14 @@ public:
         return transIt->second.updateUserItem<U>(userId, item);
     }
 
-    bool addTransaction(const std::string& tId, const Transaction& t);
+    bool addTransaction(std::string_view tId, Transaction&& t);
 
-    bool removeTransaction(const std::string& tId);
+    bool removeTransaction(const std::string_view& tId);
 
-    transaction_map printTransaction(const std::string& tId);
+    transaction_map printTransaction(const std::string_view& tId);
 
 private:
-    std::unordered_map<std::string, Transaction> _transactionManagerMap;
+    std::unordered_map<std::string_view, Transaction> _transactionManagerMap;
 
 };
 

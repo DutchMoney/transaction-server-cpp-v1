@@ -25,14 +25,14 @@ TEST_F(TransactionTest, addUser) {
 
     EXPECT_FALSE(t->addUser("preman"));
 
-    std::vector<std::string> users;
+    std::vector<std::string_view> users;
     for (auto& [user, items] : t->getTransactionMap()) {
         if (user == "unused") continue;
 
         users.push_back(user);
     }
 
-    std::vector<std::string> expect {"preman3", "preman2", "preman"};
+    std::vector<std::string_view> expect {"preman3", "preman2", "preman"};
 
     EXPECT_EQ(users, expect);
 }
@@ -48,14 +48,14 @@ TEST_F(TransactionTest, removeUser) {
     EXPECT_TRUE(t->removeUser("preman"));
     EXPECT_FALSE(t->removeUser("james"));
 
-    std::vector<std::string> users;
+    std::vector<std::string_view> users;
     for (auto& [user, items] : t->getTransactionMap()) {
         if (user == "unused") continue;
 
         users.push_back(user);
     }
 
-    std::vector<std::string> expect {"preman3", "preman2"};
+    std::vector<std::string_view> expect {"preman3", "preman2"};
 
     EXPECT_EQ(users, expect);
 }

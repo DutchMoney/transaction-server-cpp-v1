@@ -25,3 +25,4 @@ endmacro()
 
 package_add_test_with_libraries(SingleThreadTests SingleThreadTests.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")
 package_add_test_with_libraries(MultiThreadTests MultiThreadTests.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")
+package_add_test_with_libraries(TransactionManagerTests TransactionManagerTests.cpp Transaction "${PROJECT_SOURCE_DIR}/tests")

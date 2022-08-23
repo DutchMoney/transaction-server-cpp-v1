@@ -4,7 +4,7 @@
 
 struct TransactionManagerTests : public testing::Test {
     TransactionManager t {};
-
+    std::vector<std::string_view> tIds{{"1", "2"}};
     void SetUp() {
         t.addTransaction("1", {{{"apple", 5, 5}, {"banana", 10, 1}}});
         t.addTransaction("2", {{{"apple", 10, 5}, {"banana", 7, 9}}});
@@ -74,7 +74,7 @@ TEST_F(TransactionManagerTests, addValidItemsUsersManyTransaction) {
 // Test: Check add items invalid amount
 // Description: Add invalid items to a user and check unused to ensure items are conserved 
 TEST_F(TransactionManagerTests, addInvalidItemsUsersManyTransactions) {
-
+//  TRANSACTION 1
     t.updateTransaction<TransactionManager::UserActions::ADD_USER>("1", "preman");
 
     bool res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::ADD>("1", "preman", {"apple", 6, 5});
@@ -111,9 +111,21 @@ TEST_F(TransactionManagerTests, addInvalidItemsUsersManyTransactions) {
     EXPECT_EQ(std::get<0>(tMap1.find("unused")->second.find("apple")->second), 10);
 }
 
-// Test:: Check add items to invalid user
+// Test: Check add items to invalid user
+// Description: Add valid items to invalid user, ensure unused items conserved
 TEST_F(TransactionManagerTests, addValidItemsInvalidUserManyTransactions) {
-    
+    auto transactionWork = [&](const std::string_view tId) {
+        t.updateTransaction<TransactionManager::UserActions::ADD_USER>(tId, "preman");
+        int origAmountApples = std::get<0>(t.printTransaction(tId).find("unused")->second.find("apple")->second);
+
+        bool res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::ADD>(tId, "preman2", {"apple",  3, 5});
+        ASSERT_FALSE(res);
+
+        EXPECT_EQ(std::get<0>(t.printTransaction(tId).find("unused")->second.find("apple")->second), origAmountApples);
+    };
+
+    for (auto& tId : tIds) transactionWork(tId);
+
 }
 
 // TEST_F( TransactionManagerTests, updateItemPriceManyTransactions) {

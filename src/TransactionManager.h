@@ -9,7 +9,7 @@ class TransactionManager {
     
 public:
 
-    TransactionManager() : _transactionManagerMap({}) {};
+    TransactionManager() : _transactionManagerMap{} {};
 
     enum UserActions {
         CHECK_USER,

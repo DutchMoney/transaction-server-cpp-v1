@@ -123,6 +123,7 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
 
 template <>
 bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(const std::string_view& userId, const Item& item) {
+    if (item._amount < 0 || item._price < 0) return false;
 
     if (!isUserInTransaction(userId)) return false;
 
@@ -149,6 +150,7 @@ bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(const std::string
 
 template <>
 bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(const std::string_view& userId, const Item& item) {
+    if (item._amount < 0 || item._price < 0) return false;
 
     if (!isUserInTransaction(userId)) return false;
 

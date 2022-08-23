@@ -128,12 +128,81 @@ TEST_F(TransactionManagerTests, addValidItemsInvalidUserManyTransactions) {
 
 }
 
-// TEST_F( TransactionManagerTests, updateItemPriceManyTransactions) {
+// Test: Check remove valid item from user
+// Description: Add a user with some items, remove and ensure unused has original amount and user has no more
+TEST_F( TransactionManagerTests, removeValidItemsUsersManyTransactions ) {
+    auto transactionWork = [&](const std::string_view tId) {
+
+        t.updateTransaction<TransactionManager::UserActions::ADD_USER>(tId, "preman");
+        
+        int origAmountApples = std::get<0>(t.printTransaction(tId).find("unused")->second.find("apple")->second);
+        
+        bool res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::ADD>(tId, "preman", {"apple", 2, 5});
+        ASSERT_TRUE(res);
+
+        res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::REMOVE>(tId, "preman", {"apple", 2, 5});
+        ASSERT_TRUE(res);
+
+        auto tMap = t.printTransaction(tId);
+        EXPECT_EQ(std::get<0>(tMap.find("unused")->second.find("apple")->second), origAmountApples);
+        EXPECT_TRUE(tMap.find("preman")->second.find("apple") == tMap.find("preman")->second.end());
+    };
+
+    for (auto& tId : tIds) transactionWork(tId);
+}
+
+// Test: Check remove items invalid amount
+// Description:
+TEST_F( TransactionManagerTests, removeInvalidItemsUsersManyTransactions) {
+    auto transactionWork = [&](const std::string_view tId) {
+
+        t.updateTransaction<TransactionManager::UserActions::ADD_USER>(tId, "preman");
+        
+        bool res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::ADD>(tId, "preman", {"apple", 2, 5});
+        ASSERT_TRUE(res);
+
+        int origAmountApples = std::get<0>(t.printTransaction(tId).find("unused")->second.find("apple")->second);
+
+        res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::REMOVE>(tId, "preman", {"apple", -1, 5});
+        ASSERT_FALSE(res);
+
+        res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::REMOVE>(tId, "preman", {"apple", 25, 5});
+        ASSERT_FALSE(res);
+
+        EXPECT_EQ(origAmountApples, std::get<0>(t.printTransaction(tId).find("unused")->second.find("apple")->second));
+
+    };
     
-//     t.updateTransaction<TransactionManager::UserActions::ADD_USER>("1", "preman");
+    for (auto& tId : tIds) transactionWork(tId);
+}
 
+// Test: Check update item price
+// Description: Update price of an item and check if all users and unused have updated price, for many transactions
+TEST_F( TransactionManagerTests, updateItemPriceManyTransactions) {
+    auto transactionWork = [&](const std::string_view tId, float price) {
 
-// }
+        t.updateTransaction<TransactionManager::UserActions::ADD_USER>(tId, "preman");
+        
+        bool res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::ADD>(tId, "preman", {"apple",  3, 5});
+        ASSERT_TRUE(res);
+
+        EXPECT_TRUE(t.updateTransaction<TransactionManager::UserActions::UPDATE_ITEM_PRICE>(tId, "preman", "apple", price));
+
+        auto tMap = t.printTransaction(tId);
+
+        for (auto& [key, user] : tMap) {
+            auto userIt = user.find("apple");
+            if (userIt == user.end()) continue;
+
+            auto& [_amount, _price] = userIt->second;
+
+            EXPECT_EQ(_price, price);
+        }
+
+    };
+
+    for (auto& tId : tIds) transactionWork(tId, 8);
+}
 
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);

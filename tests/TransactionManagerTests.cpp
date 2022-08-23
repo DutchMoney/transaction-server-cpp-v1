@@ -152,7 +152,7 @@ TEST_F( TransactionManagerTests, removeValidItemsUsersManyTransactions ) {
 }
 
 // Test: Check remove items invalid amount
-// Description:
+// Description: Check removing invalid number of items from a user and conserving item state
 TEST_F( TransactionManagerTests, removeInvalidItemsUsersManyTransactions) {
     auto transactionWork = [&](const std::string_view tId) {
 

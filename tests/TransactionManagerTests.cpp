@@ -204,6 +204,33 @@ TEST_F( TransactionManagerTests, updateItemPriceManyTransactions) {
     for (auto& tId : tIds) transactionWork(tId, 8);
 }
 
+TEST_F( TransactionManagerTests, updateItemInvalidPriceManyTransactions) {
+    auto transactionWork = [&](const std::string_view& tId, float price) {
+
+        t.updateTransaction<TransactionManager::UserActions::ADD_USER>(tId, "preman");
+
+        float origPriceApples = std::get<1>(t.printTransaction(tId).find("unused")->second.find("apple")->second);
+        
+        bool res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::ADD>(tId, "preman", {"apple",  3, 5});
+        ASSERT_TRUE(res);
+
+        EXPECT_FALSE(t.updateTransaction<TransactionManager::UserActions::UPDATE_ITEM_PRICE>(tId, "preman", "apple", price));
+
+        auto tMap = t.printTransaction(tId);
+
+        for (auto& [key, user] : tMap) {
+            auto userIt = user.find("apple");
+            if (userIt == user.end()) continue;
+
+            auto& [_amount, _price] = userIt->second;
+
+            EXPECT_EQ(_price, origPriceApples);
+        }
+    };
+
+    for (auto& tId : tIds) transactionWork(tId, -1);
+}
+
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
 

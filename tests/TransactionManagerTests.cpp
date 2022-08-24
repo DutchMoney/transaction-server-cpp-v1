@@ -176,6 +176,27 @@ TEST_F( TransactionManagerTests, removeInvalidItemsUsersManyTransactions) {
     for (auto& tId : tIds) transactionWork(tId);
 }
 
+// Test: Check remove items from invalid user
+// Description: Remove item from user that doesn't exist and transaction data is conserved
+TEST_F( TransactionManagerTests, removeItemsInvalidUsersManyTransactions) {
+    auto transactionWork = [&](const std::string_view& tId) {
+
+        t.updateTransaction<TransactionManager::UserActions::ADD_USER>(tId, "preman");
+        
+        bool res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::ADD>(tId, "preman", {"apple", 2, 5});
+        ASSERT_TRUE(res);
+
+        int origAmountApples = std::get<0>(t.printTransaction(tId).find("unused")->second.find("apple")->second);
+
+        res = t.updateTransaction<TransactionManager::UserActions::UPDATE_USER_ITEMS, Transaction::UpdateType::REMOVE>(tId, "preman2", {"apple", 2, 5});
+        ASSERT_FALSE(res);
+
+        EXPECT_EQ(origAmountApples, std::get<0>(t.printTransaction(tId).find("unused")->second.find("apple")->second));
+    };
+
+    for (auto& tId : tIds) transactionWork(tId);
+}
+
 // Test: Check update item price
 // Description: Update price of an item and check if all users and unused have updated price, for many transactions
 TEST_F( TransactionManagerTests, updateItemPriceManyTransactions) {
@@ -204,6 +225,8 @@ TEST_F( TransactionManagerTests, updateItemPriceManyTransactions) {
     for (auto& tId : tIds) transactionWork(tId, 8);
 }
 
+// Test: Check update invalid item price
+// Description: Updat price of an item with an invalid value and ensure price and maps are conserved
 TEST_F( TransactionManagerTests, updateItemInvalidPriceManyTransactions) {
     auto transactionWork = [&](const std::string_view& tId, float price) {
 

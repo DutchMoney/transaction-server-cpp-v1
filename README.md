@@ -43,7 +43,8 @@ An OOP version with CPP of the transaction srever, for benchmarking and self-lea
 - [X] Add all tests and their description to README
 - [X] Test out adding multiple items to multiple users concurrently
 - [X] Add read/write locks per item/user in transaction (only added a reader writer lock for the item map)
-
+- [X] Add a Transaction Manager to hold a group of transactions and perform actions on them
+- [X] Add test for all TransactionManager methods to ensure edge cases are covered
 ## Future
 ### Threading
 1. Test out adding multiple items to multiple users concurrently

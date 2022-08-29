@@ -3,11 +3,14 @@
 #include <string>
 
 struct Item {
-    Item(std::string_view name, int amount, float price ); 
+    enum class ItemState {USED, IGNORED};
+    Item(std::string_view name, int amount, float price, ItemState _name=ItemState::USED); 
 
     const std::string_view _name;
     const int _amount;
     const float _price;
+    const ItemState _state;
+
 };
 
 #endif

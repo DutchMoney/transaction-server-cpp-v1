@@ -2,12 +2,13 @@
 #include <vector>
 #include <gtest/gtest.h>
 // #include <gmock/gmock.h>
+#include <string>
 #include <iostream>
 
 struct TransactionTest : public testing::Test {
     Transaction* t;
     void SetUp() {
-        t = new Transaction{{{"apple", 5, 5}, {"banana", 10, 1}}};
+        t = new Transaction{"1", {{"apple", 5, 5}, {"banana", 10, 1}}};
     }
 
     void TearDown() {

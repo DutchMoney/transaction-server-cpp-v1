@@ -3,12 +3,14 @@
 #include <iomanip>
 #include <shared_mutex>
 
-Transaction::Transaction(const std::vector<Item>& items) {
+Transaction::Transaction(const std::string_view& tId, const std::vector<Item>& items) : _tId(tId) {
 
     for (auto& item : items) {
        _itemMap.insert({item._name, {item._amount, item._price}}); 
     }
 }
+
+Transaction::Transaction(const std::string_view& tId) : _tId(tId) {} // Empty Transaction
 
 Transaction::Transaction(const Transaction& t) : transactionItemMutex{} {
     std::scoped_lock<std::shared_mutex> lock{t.transactionItemMutex};

@@ -6,8 +6,8 @@ struct TransactionManagerTests : public testing::Test {
     TransactionManager t {};
     std::vector<std::string_view> tIds{{"1", "2"}};
     void SetUp() {
-        t.addTransaction("1", {{{"apple", 5, 5}, {"banana", 10, 1}}});
-        t.addTransaction("2", {{{"apple", 10, 5}, {"banana", 7, 9}}});
+        t.addTransaction("1", {"1", {{"apple", 5, 5}, {"banana", 10, 1}}});
+        t.addTransaction("2", {"2", {{"apple", 10, 5}, {"banana", 7, 9}}});
     }
 
     void TearDown() {

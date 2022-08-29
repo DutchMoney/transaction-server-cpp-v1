@@ -16,7 +16,8 @@ typedef std::unordered_map<std::string_view, item_map> transaction_map;
 class Transaction {
 
 public:
-    Transaction(const std::vector<Item>& items);
+    Transaction(const std::string_view& tId); //Empty Transaction
+    Transaction(const std::string_view& tId, const std::vector<Item>& items); //Filled Transaction
 
     Transaction(const Transaction& t);
 
@@ -40,6 +41,7 @@ public:
     template <UpdateType T>
     bool updateUserItem(const std::string_view& userId, const Item& item);
 
+    constexpr std::string_view getTid() {return _tId;} 
 private:
 
 
@@ -79,6 +81,8 @@ private:
         return true;
     } 
 
+
+
     template <UpdateType T>
     bool updateItemMap(const Item& item) {
 
@@ -104,6 +108,7 @@ private:
 
     item_map _itemMap;
     transaction_map _userMap;
+    const std::string_view _tId;
     mutable std::shared_mutex transactionItemMutex;
 };
 

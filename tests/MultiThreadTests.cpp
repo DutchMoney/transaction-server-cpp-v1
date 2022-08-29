@@ -8,7 +8,7 @@
 
 struct MultiThreadTests : public testing::Test {
     
-    Transaction t {{{"apple", 5, 5}, {"banana", 10, 1}}};
+    Transaction t {"1", {{"apple", 5, 5}, {"banana", 10, 1}}};
 
     void SetUp() {
 

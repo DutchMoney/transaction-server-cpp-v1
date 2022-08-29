@@ -128,7 +128,8 @@ TEST_F(TransactionTest, addInvalidUserItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::ADD>("preman4", {"apple", 3, 5}));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman4", {"apple", 3, 5});
+    EXPECT_FALSE(res);
 
     EXPECT_TRUE(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second) == 5);
 
@@ -143,7 +144,8 @@ TEST_F(TransactionTest, removeInvalidUserItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman4", {"apple", 0, 5}));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::REMOVE>("preman4", {"apple", 0, 5});
+    EXPECT_FALSE(res);
 
     EXPECT_TRUE(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second) == 5);
 
@@ -158,7 +160,8 @@ TEST_F(TransactionTest, addUserInvalidSmallItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", -5, 5 }));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", -5, 5 });
+    EXPECT_FALSE(res);
 
     EXPECT_TRUE(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second) == 5);
 
@@ -175,7 +178,8 @@ TEST_F(TransactionTest, addUserInvalidLargeItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 10, 5 }));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 10, 5 });
+    EXPECT_FALSE(res);
 
     EXPECT_TRUE(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second) == 5);
 
@@ -193,7 +197,8 @@ TEST_F(TransactionTest, removeUserInvalidNegativeItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman", {"apple", -5, 5 }));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::REMOVE>("preman", {"apple", -5, 5 });
+    EXPECT_FALSE(res);
 
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 5);
 
@@ -211,16 +216,18 @@ TEST_F(TransactionTest, removeUserInvalidLargeItems) {
     t->addUser("preman3");
 
     //Checking remove from user no apples
-    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman", {"apple", 1, 5 }));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::REMOVE>("preman", {"apple", 1, 5 });
+    EXPECT_FALSE(res);
 
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 5);
 
     EXPECT_TRUE(t->getTransactionMap().find("preman")->second.find("apple") == t->getTransactionMap().find("preman")->second.end());
 
     // Checking remove from user with apples
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 1, 5 });
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 1, 5 });
     
-    EXPECT_FALSE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman", {"apple", 2, 5}));
+    res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::REMOVE>("preman", {"apple", 2, 5});
+    EXPECT_FALSE(res);
 
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("preman")->second.find("apple")->second), 1);
 
@@ -235,7 +242,8 @@ TEST_F(TransactionTest, addEmptyUserValidItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5}));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
+    EXPECT_TRUE(res);
 
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("preman")->second.find("apple")->second), 3);
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 2);
@@ -250,10 +258,10 @@ TEST_F(TransactionTest, addExistingUserValidItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
 
-    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 1, 5}));
-
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 1, 5});
+    EXPECT_TRUE(res);
 
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("preman")->second.find("apple")->second), 4);
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 1);
@@ -267,9 +275,10 @@ TEST_F(TransactionTest, addExistingUserValidAllItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
 
-    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5}));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
+    EXPECT_TRUE(res);
 
     auto tMap = t->getTransactionMap();
     auto applesIt = tMap.find("unused")->second.find("apple");
@@ -288,9 +297,10 @@ TEST_F(TransactionTest, removeExistingUserValidItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 3, 5});
 
-    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman", {"apple", 1, 5}));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::REMOVE>("preman", {"apple", 1, 5});
+    EXPECT_TRUE(res);
 
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("preman")->second.find("apple")->second), 2);
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 3);
@@ -304,9 +314,10 @@ TEST_F(TransactionTest, removeExistingUserValidAllItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 5, 5});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 5, 5});
 
-    EXPECT_TRUE(t->updateUserItem<Transaction::UpdateType::REMOVE>("preman", {"apple", 5, 5}));
+    bool res = t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::REMOVE>("preman", {"apple", 5, 5});
+    EXPECT_TRUE(res);
 
     auto tMap = t->getTransactionMap();
     auto applesIt = tMap.find("preman")->second.find("apple");
@@ -324,11 +335,11 @@ TEST_F(TransactionTest, removeUsersWithItems) {
     t->addUser("preman2");
     t->addUser("preman3");
 
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman", {"banana", 5, 1});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"apple", 2, 5});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman", {"banana", 5, 1});
 
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman2", {"apple", 2, 5});
-    t->updateUserItem<Transaction::UpdateType::ADD>("preman2", {"banana", 1, 1});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman2", {"apple", 2, 5});
+    t->updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>("preman2", {"banana", 1, 1});
 
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("apple")->second), 1);
     EXPECT_EQ(std::get<0>(t->getTransactionMap().find("unused")->second.find("banana")->second), 4);

@@ -31,7 +31,9 @@ struct MultiThreadTests : public testing::Test {
 TEST_F(MultiThreadTests, addUserInvalidMultiItems) {
     auto addItemsToUser = [this] (const std::string& userId, bool expected) {
         std::cout << "Acquire " << userId << std::endl;
-        EXPECT_EQ(t.updateUserItem<Transaction::UpdateType::ADD>(userId, {"apple", 2, 5}), expected);
+
+        bool res = t.updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>(userId, {"apple", 2, 5});
+        EXPECT_EQ(res, expected);
         std::cout << "Release " << userId << std::endl;
     };
 

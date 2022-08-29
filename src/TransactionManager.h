@@ -34,7 +34,7 @@ public:
         auto transIt = _transactionManagerMap.find(tId);
         if (transIt == _transactionManagerMap.end())  return false;
 
-        return transIt->second.updateUserItem<U>(userId, item);
+        return transIt->second.updateUserItem<Transaction::UpdateType, U>(userId, item);
     }
 
     bool addTransaction(std::string_view tId, Transaction&& t);

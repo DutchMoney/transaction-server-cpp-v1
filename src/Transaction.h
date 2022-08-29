@@ -37,13 +37,13 @@ public:
 
     friend std::ostream& operator<< (std::ostream& os, const Transaction& t);
 
-    template <typename UpdateType, UpdateType T>
+    template <UpdateType T>
     bool updateUserItem(const std::string_view& userId, const Item& item);
 
 private:
 
 
-    template <typename UpdateType, UpdateType T>
+    template <UpdateType T>
     bool isUserHasItem(const Item& item, std::string_view userId) const {
 
         if(!isUserInTransaction(userId)) return false;
@@ -61,7 +61,7 @@ private:
         return true;
     }
 
-    template <typename UpdateType, UpdateType T>
+    template <UpdateType T>
     bool isItemUnused(const Item& item) const {
         
         std::shared_lock<std::shared_mutex> readLock{transactionItemMutex};
@@ -79,10 +79,10 @@ private:
         return true;
     } 
 
-    template <typename UpdateType, UpdateType T>
+    template <UpdateType T>
     bool updateItemMap(const Item& item) {
 
-        if (!isItemUnused<UpdateType, T>(item)) {
+        if (!isItemUnused<T>(item)) {
             if (T == UpdateType::REMOVE) return false;
             
             std::scoped_lock<std::shared_mutex> writeLock{transactionItemMutex};

@@ -11,7 +11,7 @@ public:
 
     TransactionManager() : _transactionManagerMap{} {};
 
-    enum UserActions {
+    enum class UserActions {
         CHECK_USER,
         ADD_USER,
         REMOVE_USER,
@@ -29,12 +29,12 @@ public:
 
     template <UserActions T, Transaction::UpdateType U> 
     bool updateTransaction(const std::string_view& tId, const std::string_view& userId, Item&& item) {
-        if (T != UPDATE_USER_ITEMS) return false;
+        if (T != UserActions::UPDATE_USER_ITEMS) return false;
 
         auto transIt = _transactionManagerMap.find(tId);
         if (transIt == _transactionManagerMap.end())  return false;
 
-        return transIt->second.updateUserItem<Transaction::UpdateType, U>(userId, item);
+        return transIt->second.updateUserItem<U>(userId, item);
     }
 
     bool addTransaction(std::string_view tId, Transaction&& t);

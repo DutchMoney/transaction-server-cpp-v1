@@ -47,7 +47,7 @@ bool Transaction::removeUser(std::string_view userId) {
         const auto& [name, itemDescPair] = itemPair;
         const auto [amount, price] = itemDescPair;
 
-        updateItemMap<UpdateType, UpdateType::ADD>({name, amount, price});
+        updateItemMap<UpdateType::ADD>({name, amount, price});
     }
 
     _userMap.erase(userId);
@@ -68,7 +68,7 @@ const transaction_map Transaction::getTransactionMap() const {
 bool Transaction::updateItemPrice(std::string_view name, float price) {
     if (price < 0) return false;
 
-    if (isItemUnused<UpdateType, UpdateType::ADD>({name, 0, price})) {
+    if (isItemUnused<UpdateType::ADD>({name, 0, price})) {
         auto itemIt = _itemMap.find(name);
 
         auto& [_amount, _price] = itemIt->second;
@@ -76,7 +76,7 @@ bool Transaction::updateItemPrice(std::string_view name, float price) {
         _price = price;
         
         for (auto& userIt : _userMap) {
-            if (!isUserHasItem<UpdateType, UpdateType::ADD>({name, 0, price}, userIt.first)) continue;
+            if (!isUserHasItem<UpdateType::ADD>({name, 0, price}, userIt.first)) continue;
 
             auto itemIt = userIt.second.find(name);
             auto& [_amount, _price] = itemIt->second;
@@ -122,12 +122,12 @@ std::ostream& operator<<(std::ostream& os, const Transaction& t) {
 }
 
 template <>
-bool Transaction::updateUserItem<Transaction::UpdateType, Transaction::UpdateType::ADD>(const std::string_view& userId, const Item& item) {
+bool Transaction::updateUserItem<Transaction::UpdateType::ADD>(const std::string_view& userId, const Item& item) {
     if (item._amount < 0 || item._price < 0) return false;
 
     if (!isUserInTransaction(userId)) return false;
 
-    if (!updateItemMap<UpdateType, UpdateType::REMOVE>(item)) return false;
+    if (!updateItemMap<UpdateType::REMOVE>(item)) return false;
 
     auto userIt = _userMap.find(userId);
 
@@ -149,7 +149,7 @@ bool Transaction::updateUserItem<Transaction::UpdateType, Transaction::UpdateTyp
 }
 
 template <>
-bool Transaction::updateUserItem<Transaction::UpdateType, Transaction::UpdateType::REMOVE>(const std::string_view& userId, const Item& item) {
+bool Transaction::updateUserItem<Transaction::UpdateType::REMOVE>(const std::string_view& userId, const Item& item) {
     if (item._amount < 0 || item._price < 0) return false;
 
     if (!isUserInTransaction(userId)) return false;
@@ -163,11 +163,11 @@ bool Transaction::updateUserItem<Transaction::UpdateType, Transaction::UpdateTyp
     const int newAmount = amount - item._amount;
 
     if (newAmount == 0) {
-        if (!updateItemMap<UpdateType, UpdateType::ADD>(item)) return false;
+        if (!updateItemMap<UpdateType::ADD>(item)) return false;
         userIt->second.erase(item._name);
     }
     else if (newAmount > 0) {
-        if (!updateItemMap<UpdateType, UpdateType::ADD>(item)) return false;
+        if (!updateItemMap<UpdateType::ADD>(item)) return false;
         amount = newAmount;
     }
     else return false;

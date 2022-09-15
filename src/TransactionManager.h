@@ -4,7 +4,6 @@
 #include <unordered_map>
 #include "Transaction.h"
 #include "Item.h"
-
 class TransactionManager {
     
 public:
@@ -19,6 +18,8 @@ public:
         UPDATE_USER_ITEMS,
         UPDATE_UNUSED_ITEMS
     };
+
+    bool consumeInstruction(const Instruction& ins);
 
     //CHECK_USER ADD_USER REMOVE_USER
     template <UserActions T> 

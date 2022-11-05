@@ -4,7 +4,6 @@
 #include "Item.h"
 
 #define NULL_ITEM_NAME "IGNORE_ITEM"
-
 class Instruction {
 public:
     const TransactionManager::UserActions _action;
